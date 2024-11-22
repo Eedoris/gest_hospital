@@ -6,6 +6,15 @@
     <div class="container">
         <h3>Consultations du patient : {{ $patient->name }} {{ $patient->surname }}</h3>
 
+        <!-- Icône de retour avec un lien -->
+        <a href="{{ route('docpat') }}" class="btn btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+            </svg>
+
+        </a>
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -36,27 +45,33 @@
                         <textarea class="form-control" id="note" name="note" required></textarea>
                     </div>
                     <!--
-                        <div class="mb-3">
-                            <label>Analyses disponibles</label>
-                            <h2 class="my-5"></h2>
-                            <div>
-                                @foreach ($analyses as $analyse)
+                                                                        <div class="mb-3">
+                                                                            <label>Analyses disponibles</label>
+                                                                            <h2 class="my-5"></h2>
+                                                                            <div>
+                                                                                @foreach ($analyses as $analyse)
     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="analyses[]"
-                                            value="{{ $analyse->id_an }}" id="analyse_{{ $analyse->id_an }}">
-                                        <label class="form-check-label" for="analyse_{{ $analyse->id_an }}">
-                                            {{ $analyse->libelle }}
-                                        </label>
-                                    </div>
+                                                                                        <input class="form-check-input" type="checkbox" name="analyses[]"
+                                                                                            value="{{ $analyse->id_an }}" id="analyse_{{ $analyse->id_an }}">
+                                                                                        <label class="form-check-label" for="analyse_{{ $analyse->id_an }}">
+                                                                                            {{ $analyse->libelle }}
+                                                                                        </label>
+                                                                                    </div>
     @endforeach
-                            </div>
-                        </div>-->
+                                                                            </div>
+                                                                        </div>-->
 
 
                     <button type="submit" class="btn btn-success">Ajouter consultation</button>
                 </form>
 
                 <hr class="my-12">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <h4>Liste des consultations</h4>
                 <ul class="list-group">
                     @foreach ($consultations as $consultation)
@@ -65,16 +80,16 @@
                             <h6>Note : {{ $consultation->note }}</h6>
 
                             <!--
-                                @if ($consultation->analyses->isEmpty())
+                                                                                @if ($consultation->analyses->isEmpty())
     <p>Aucune analyse associée</p>
 @else
     <ul>
-                                        @foreach ($consultation->analyses as $analyse)
+                                                                                        @foreach ($consultation->analyses as $analyse)
     <li>{{ $analyse->libelle }}</li>
     @endforeach
-                                    </ul>
+                                                                                    </ul>
     @endif
-                                  -->
+                                                                                  -->
 
                         </li>
                     @endforeach

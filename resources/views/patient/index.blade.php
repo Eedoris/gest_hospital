@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="row g-6">
+
         <!-- Basic Buttons -->
 
         <div class="col-12">
@@ -20,6 +21,12 @@
             </div>
         </div>
         <!-- Basic Bootstrap Table -->
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="card">
             <h5 class="card-header">Patients</h5>
             <div class="table-responsive text-nowrap">
