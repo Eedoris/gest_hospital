@@ -10,15 +10,9 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    //
-    Schema::create('doctors', function (Blueprint $table) {
-      $table->id('id_doctor');
-      $table->string('doctor_title');
-    
-
-
-
-
+    Schema::table('services', function (Blueprint $table) {
+      //
+      $table->timestamps();
     });
   }
 
@@ -27,6 +21,8 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    //
+    Schema::table('services', function (Blueprint $table) {
+      //
+    });
   }
 };

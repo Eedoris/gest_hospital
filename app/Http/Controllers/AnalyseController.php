@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Analyse;
 use Illuminate\Http\Request;
 
-
 class AnalyseController extends Controller
 {
   /**
@@ -13,7 +12,7 @@ class AnalyseController extends Controller
    */
   public function index()
   {
-
+    //
   }
 
   /**
@@ -22,7 +21,6 @@ class AnalyseController extends Controller
   public function create()
   {
     //
-
   }
 
   /**
@@ -40,23 +38,21 @@ class AnalyseController extends Controller
 
     // Créer une nouvelle analyse
     $analyse = new Analyse();
-    $analyse->libelle = $request->libelle;
-    $analyse->date_res = $request->date_res;
-    $analyse->state = $request->state;
-    $analyse->result = $request->description;
+    $analyse->libelle = $validated['libelle'];
+    $analyse->date_res = $validated['date_res'];
+    $analyse->state = $validated['state'];
+    $analyse->result = $validated['result'] ?? null;
 
     // Sauvegarder l'analyse
     $analyse->save();
 
-    return back()->with('success', 'Analyse ajoutée avec succès !');
+    return redirect()->route('docpat', ['fragment' => 'consultations'])->with('success_analyse', 'Analyse ajoutée avec succès!');
   }
-
-
 
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show(string $id_an)
   {
     //
   }
@@ -64,7 +60,7 @@ class AnalyseController extends Controller
   /**
    * Show the form for editing the specified resource.
    */
-  public function edit(string $id)
+  public function edit(string $id_an)
   {
     //
   }
@@ -72,16 +68,42 @@ class AnalyseController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request, string $id_an)
   {
-    //
+    // Valider les données de la requête
+    $validated = $request->validate([
+      'libelle' => 'required|string',
+      'date_res' => 'required|date|before_or_equal:today',
+      'state' => 'required|string',
+      'result' => 'nullable|string',
+    ]);
+
+    // Trouver l'analyse par ID
+    $analyse = Analyse::findOrFail($id_an);
+
+    // Mettre à jour les champs
+    $analyse->libelle = $validated['libelle'];
+    $analyse->date_res = $validated['date_res'];
+    $analyse->state = $validated['state'];
+    $analyse->result = $validated['result'] ?? null;
+
+    // Sauvegarder les modifications
+    $analyse->save();
+
+    return back()->with('success_analyse', 'Analyse mise à jour avec succès !');
   }
 
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $id)
+  public function destroy(string $id_an)
   {
-    //
+    // Trouver l'analyse par ID
+    $analyse = Analyse::findOrFail($id_an);
+
+    // Supprimer l'analyse
+    $analyse->delete();
+
+    return back()->with('success_analyse', 'Analyse supprimée avec succès !');
   }
 }

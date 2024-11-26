@@ -11,12 +11,12 @@ class Consultation extends Model
   protected $fillable = ['patient_id', 'date_cons', 'note', 'doctor_id'];
   public function doctor()
   {
-    return $this->belongsTo(Doctor::class);
+    return $this->belongsTo(Doctor::class, 'doctor_id', 'id_doctor');
   }
 
   public function patient()
   {
-    return $this->belongsTo(Patient::class);
+    return $this->belongsTo(Patient::class, 'patient_id', 'id_pat');
   }
 
   public function prescriptions()

@@ -9,7 +9,7 @@
         {
           "url": "/patients",
           "name": "Liste",
-          "slug": "dashboard"
+          "slug": "dashboard-patient"
         },
         {
           "url": "/",
@@ -48,6 +48,33 @@
         {
           "url": "/appoint",
           "name": "Without navbar",
+          "slug": "layouts-without-navbar"
+        }
+      ]
+    },
+    {
+      "name": "Options",
+      "icon": "menu-icon tf-icons bx bx-layout",
+      "slug": "Admin",
+      "submenu": [
+        {
+          "url": "/admin/user",
+          "name": "Gestion des utilisateurs",
+          "slug": "layouts-without-menu"
+        },
+        {
+          "url": "/admin/doctor",
+          "name": "Gestion des docteurs",
+          "slug": "layouts-without-menu"
+        },
+        {
+          "url": "/adminservice",
+          "name": "Services et analyses",
+          "slug": "layouts-without-menu"
+        },
+        {
+          "url": "/admin/history",
+          "name": "Historique Consultation",
           "slug": "layouts-without-navbar"
         }
       ]
