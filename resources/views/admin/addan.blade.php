@@ -16,6 +16,11 @@
                     Analyses
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if (request()->get('fragment') == 'specialite') active @endif" data-bs-toggle="tab" href="#specialite">
+                    Specialités
+                </a>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -42,6 +47,12 @@
                 @if (session('success_service'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success_service') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session('error_service'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error_service') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
@@ -95,7 +106,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <!--<button type="button" class="btn btn-secondary"
-                                                                                                                                                                                                                                                              data-bs-dismiss="modal">Annuler</button>-->
+                                                                                                                                                                                                                                                                                                                                      data-bs-dismiss="modal">Annuler</button>-->
                                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                                         </div>
                                     </form>
@@ -117,7 +128,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <!--<button type="button" class="btn btn-secondary"
-                                                                                                                                                                    data-bs-dismiss="modal">Annuler</button>-->
+                                                                                                                                                                                                                                            data-bs-dismiss="modal">Annuler</button>-->
                                         <form id="delete-service-{{ $service->id_serv }}"
                                             action="{{ route('services.destroy', $service->id_serv) }}" method="POST"
                                             style="display: inline;">
@@ -149,6 +160,12 @@
                 @if (session('success_analysis'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success_analysis') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session('error_analyse'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error_analyse') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
@@ -197,6 +214,113 @@
                     @endforeach
                 </ul>
             </div>
+
+            <div class="tab-pane fade @if (request()->get('fragment') == 'specialite') show active @endif" id="specialite">
+
+                <form action="{{ route('specialite.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="libelle">Nom de la specialité</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Ajouter une spécialité</button>
+                </form>
+
+                <hr class="my-4">
+                @if (session('error_specialite'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error_specialite') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session('success_specialite'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success_specialite') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <h4>Liste des specialités disponibles</h4>
+                <ul class="list-group">
+                    @foreach ($specialities as $specialite)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>{{ $specialite->title }}</div>
+                            <div class="dropdown ms-auto">
+                                <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#editModalSpe-{{ $specialite->id_spe }}">
+                                        <i class="fa fa-edit"></i> Modifier
+                                    </a>
+                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModalSpe-{{ $specialite->id_spe }}">
+                                        <i class="fa fa-trash"></i> Supprimer
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!--Modal ajouter-->
+                        <div class="modal fade" id="editModalSpe-{{ $specialite->id_spe }}" tabindex="-1"
+                            aria-labelledby="editModalSpeLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="{{ route('specialite.update', $specialite->id_spe) }}" method="POST">
+                                        @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalSpeLabel">Modifier la specialité</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="title">Nom du service</label>
+                                                <input type="text" class="form-control" id="title" name="title"
+                                                    value="{{ $specialite->title }}" required>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!--<button type="button" class="btn btn-secondary"
+                                                                                                                                                                                                                                                                                                                                    data-bs-dismiss="modal">Annuler</button>-->
+                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Supprimer specialite -->
+                        <div class="modal fade" id="deleteModalSpe-{{ $specialite->id_spe }}" tabindex="-1"
+                            aria-labelledby="deleteModalLabelSpe" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmation de suppression</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous sûr de vouloir supprimer la specialité
+                                        <strong>{{ $specialite->title }}</strong> ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{{ route('specialite.destroy', $specialite->id_spe) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </ul>
+            </div>
+
+
         </div>
     </div>
     <!--<script>

@@ -6,6 +6,7 @@ use App\Http\Controllers\AppointController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SpeController;
 use App\Http\Controllers\UserController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
@@ -121,7 +122,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
 
-//routes perso
+//routes secre-admin
 
 Route::get('/patients', [PatientController::class, 'index'])->name('patientindex');
 Route::get('/newpatient', [PatientController::class, 'create'])->name('createpatient');
@@ -129,21 +130,23 @@ Route::post('/patients', [PatientController::class, 'store'])->name('patientstor
 Route::get('/patients/{uuid}/editpat', [PatientController::class, 'edit'])->name('patientsedit');
 Route::post('/patients/{uuid}/updatpat', [PatientController::class, 'update'])->name('patientsupdate');
 
-//routes rdv
+//routes rdv-secre
 Route::get('/appointments', [AppointController::class, 'index'])->name('appointindex');
 Route::get('/newappoint', [AppointController::class, 'create'])->name('createappoint');
 Route::post('/appointments', [AppointController::class, 'store'])->name('appointstore');
 Route::get('/appoints/edit', [AppointController::class, 'edit'])->name('appoint.edit');
 Route::post('/appoints/update', [AppointController::class, 'update'])->name('appoint.update');
 
-//Doctor
+Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search'); 
+
+//Doctor routes
 Route::get('/doctorpat', [PatientController::class, 'indexdoctor'])->name('docpat');
 Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('patient.consultations');
 Route::post('/consultations/store', [ConsultationController::class, 'store'])->name('consultations.store');
 Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
 Route::post('/consultations/destroy/{id_cons}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
 
-//analyses
+//doctor-analyse
 Route::post('/patients/analyses', [AnalyseController::class, 'store'])->name('analysestore');
 Route::post('/patients/analyseupdate/{id_an}', [AnalyseController::class, 'update'])->name('analyseupdate');
 Route::post('/patients/analysedestroy/{id_an}', [AnalyseController::class, 'destroy'])->name('analysedestroy');
@@ -155,25 +158,32 @@ Route::post('/services/store', [ServiceController::class, 'store'])->name('servi
 Route::post('/services/{id_serv}', [ServiceController::class, 'update'])->name('servicesupdate');
 Route::post('/services/destroy/{id_serv}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
+//adminanalyse
 Route::post('/analyse/store', [AnalysedispoController::class, 'store'])->name('analyses.store');
 Route::post('/analyse/destroy/{id}', [AnalysedispoController::class, 'destroy'])->name('analyses.destroy');
+
+//admin-consultation
 Route::get('/admin/history', [ConsultationController::class, 'history'])->name('consultation.history');
+
+//admin-spe
+Route::post('/admin/spe/store', [SpeController::class, 'store'])->name('specialite.store');
+Route::post('/admin/speupdate/{id_spe}', [SpeController::class, 'update'])->name('specialite.update');
+Route::post('/admin/spedestroy/{id_spe}', [SpeController::class, 'destroy'])->name('specialite.destroy');
 
 
 Route::get('/login', function () {
   return view('login.login');
 });
 
-Route::get('/admin/gestdocteur', function () {
-  return view('admin.gestdocteur');
-});
-
-
+//admin-user
 Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
 Route::post('/admin/userstore', [UserController::class, 'store'])->name('userstore');
 Route::put('/admin/user/{uuid}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/admin/user/{uuid}', [UserController::class, 'destroy'])->name('user.destroy');
 
 
+
+//admin-doctor
 Route::get('/admin/doctor', [DoctorController::class, 'index'])->name('doctor.index');
 Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctor.store');
+Route::post('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');

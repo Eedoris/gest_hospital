@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\AnalyseDisponible;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -16,7 +17,13 @@ class ServiceController extends Controller
     //
     $services = Service::all();
     $an_disponibles = AnalyseDisponible::all();
-    return view('admin.addan', compact('services', 'an_disponibles'));
+    $specialities = Speciality::all();
+
+    $specialities = Speciality::orderBy('created_at', 'asc')->get();
+    $an_disponibles = AnalyseDisponible::orderBy('created_at', 'asc')->get();
+    $services = Service::orderBy('created_at', 'asc')->get();
+
+    return view('admin.addan', compact('services', 'an_disponibles', 'specialities'));
   }
 
   /**
@@ -36,10 +43,15 @@ class ServiceController extends Controller
       'serv_name' => 'required',
       'description' => 'required',
     ]);
+    $existingAnalyse = Service::where('serv_name', $request->serv_name)->first();
+    if ($existingAnalyse) {
+      return redirect()
+        ->route('service.index', ['fragment' => 'services'])
+        ->with('error_service', 'Ce service existe déjà!');
+    }
 
     Service::create($request->all());
 
-    // Redirige vers l'onglet "services"
     return redirect()->route('service.index', ['fragment' => 'services'])->with('success_service', 'Service ajouté avec succès!');
   }
 
@@ -74,6 +86,7 @@ class ServiceController extends Controller
     $service = Service::findOrFail($id_serv);
     $service->update($validated);
 
+
     return redirect()->back()->with('success_service', 'Service modifié avec succès!');
   }
 
@@ -90,11 +103,3 @@ class ServiceController extends Controller
     return redirect()->back()->with('success_service', 'Service suprimé avec succès!');
   }
 }
-
-
-
-
-
-
-
-

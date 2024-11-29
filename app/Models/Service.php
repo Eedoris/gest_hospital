@@ -14,4 +14,10 @@ class Service extends Model
     return $this->hasMany(Doctor::class);
   }
 
+  public function appoints()
+  {
+    return $this->hasMany(Appoint::class, 'service_id', 'id_serv');
+  }
+
+
 }

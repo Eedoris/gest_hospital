@@ -28,6 +28,7 @@
                         <tr>
                             <th>Nom</th>
                             <th>Prenom</th>
+                            <th>Contact</th>
                             <th>Date du rendez-vous</th>
                             <th>service</th>
                             <th></th>
@@ -39,6 +40,7 @@
                             <tr class="item">
                                 <td>{{ $appoint->name }}</td>
                                 <td>{{ $appoint->surname }}</td>
+                                <td>{{ $appoint->contact }} </td>
                                 <td>{{ $appoint->date_app }} </td>
                                 <td>{{ $appoint->service->serv_name }}</td>
 

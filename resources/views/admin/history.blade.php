@@ -44,6 +44,7 @@
                     <th>Date</th>
                     <th>Patient</th>
                     <th>Note</th>
+                    <th>Docteur</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +53,8 @@
                         <td>{{ $consultation->date_cons }}</td>
                         <td>{{ $consultation->patient->name }} {{ $consultation->patient->surname }}</td>
                         <td>{{ $consultation->note }}</td>
-                       
+                        <td>{{ $doctor->name }} {{ $doctor->surname }}</td>
+
                     </tr>
                 @empty
                     <tr>

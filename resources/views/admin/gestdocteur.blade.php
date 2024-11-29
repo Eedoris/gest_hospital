@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="container">
+
         <h3>Gestion des Médecins</h3>
 
         <!-- Formulaire d'ajout -->
@@ -15,10 +16,19 @@
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     @endforeach
                 </ul>
             </div>
         @endif
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
 
 
         <!-- Tableau des Médecins -->
@@ -41,7 +51,7 @@
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -64,49 +74,66 @@
                     <div class="modal fade" id="editDoctorModal-{{ $doctor->id_doctor }}" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="" method="POST">
+                                <form action="{{ route('doctor.update', $doctor->id_doctor) }}" method="POST">
                                     @csrf
                                     <div class="modal-header">
                                         <h5 class="modal-title">Modifier Médecin</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="doctor_title">Titre</label>
-                                        <input type="text" class="form-control" name="doctor_title"
-                                            value="{{ $doctor->doctor_title }}" required>
-                                    </div>
-
                                     <div class="modal-body">
-                                        <!-- Sélection de la spécialité -->
+                                        <!-- Médecin -->
                                         <div class="mb-3">
-                                            <label for="specialty">Spécialité</label>
-                                            <select name="id_spe" class="form-control" required>
-                                                @foreach ($specialities as $specialty)
-                                                    <option value="{{ $specialty->id_spe }}"
-                                                        {{ $specialty->id_spe == $doctor->id_spe ? 'selected' : '' }}>
-                                                        {{ $specialty->name }}
+                                            <label for="user_id">Médecin</label>
+                                            <select name="user_id" class="form-control" required>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id_user }}"
+                                                        {{ $user->id_user == $doctor->user_id ? 'selected' : '' }}>
+                                                        {{ $user->name }} {{ $user->surname }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <!-- Sélection du Service existant -->
+
+                                        <!-- Titre -->
+                                        <div class="mb-3">
+                                            <label for="doctor_title">Titre</label>
+                                            <input type="text" class="form-control" name="doctor_title"
+                                                value="{{ $doctor->doctor_title }}" required>
+                                        </div>
+
+                                        <!-- Spécialité -->
+                                        <div class="mb-3">
+                                            <label for="id_spe">Spécialité</label>
+                                            <select name="id_spe" class="form-control" required>
+                                                @foreach ($specialities as $speciality)
+                                                    <option value="{{ $speciality->id_spe }}"
+                                                        {{ $speciality->id_spe == $doctor->id_spe ? 'selected' : '' }}>
+                                                        {{ $speciality->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <!-- Service -->
                                         <div class="mb-3">
                                             <label for="service_id">Service</label>
                                             <select name="service_id" class="form-control" required>
                                                 @foreach ($services as $service)
-                                                    <option value="{{ $service->id }}"
-                                                        {{ $service->id == $doctor->service_id ? 'selected' : '' }}>
-                                                        {{ $service->name }}
+                                                    <option value="{{ $service->id_serv }}"
+                                                        {{ $service->id_serv == $doctor->id_serv ? 'selected' : '' }}>
+                                                        {{ $service->serv_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Enregistrer</button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -152,7 +179,8 @@
                                 <select name="user_id" class="form-control" required>
                                     @foreach ($users as $user)
                                         @if ($user->statut == 'medecin')
-                                            <option value="{{ $user->id_user }}">{{ $user->name }} {{ $user->surname }}
+                                            <option value="{{ $user->id_user }}">{{ $user->name }}
+                                                {{ $user->surname }}
                                             </option>
                                         @endif
                                     @endforeach

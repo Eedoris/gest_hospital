@@ -15,40 +15,73 @@
                     <form action="{{ route('patientsupdate', $patient->uuid) }}" method="POST">
                         @csrf
                         <div class="mb-6">
-                            <label class="form-label" for="basic-default-fullname">Nom</label>
-                            <input type="text" class="form-control" id="basic-default-fullname" name="name"
-                                value="{{ $patient->name }}" placeholder="nom..." />
+                            <label class="form-label" for="name">Nom</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" value="{{ old('name', $patient->name) }}" placeholder="Nom..." required />
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-6">
-                            <label class="form-label" for="basic-default-company">Prenoms</label>
-                            <input type="text" class="form-control" id="basic-default-company" name="surname"
-                                value="{{ $patient->surname }}" placeholder="prenoms..." />
+                            <label class="form-label" for="surname">Prénoms</label>
+                            <input type="text" class="form-control @error('surname') is-invalid @enderror" id="surname"
+                                name="surname" value="{{ old('surname', $patient->surname) }}" placeholder="Prénoms..."
+                                required />
+                            @error('surname')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-6">
-                            <label class="form-label" for="basic-default-phone">Contact:</label>
-                            <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                value="{{ $patient->contact }}" name="contact" placeholder="658 799 8941" />
+                            <label class="form-label" for="contact">Contact</label>
+                            <input type="text" class="form-control @error('contact') is-invalid @enderror" id="contact"
+                                name="contact" value="{{ old('contact', $patient->contact) }}"
+                                placeholder="Ex : 91234567 ou +22891234567" required />
+                            @error('contact')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label" for="date_of_birth">Date de naissance</label>
-                            <input type="date" class="form-control" id="date_of_birth"
-                                value="{{ $patient->date_of_birth }}" name="date_of_birth" required />
+                            <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
+                                id="date_of_birth" name="date_of_birth"
+                                value="{{ old('date_of_birth', $patient->date_of_birth) }}" required />
+                            @error('date_of_birth')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-6">
-                            <label class="form-label" for="basic-default-company">Adresse</label>
-                            <input type="text" class="form-control" id="basic-default-company" name="adress"
-                                value="{{ $patient->adress }}" placeholder="Adresse" required />
+                            <label class="form-label" for="adress">Adresse</label>
+                            <input type="text" class="form-control @error('adress') is-invalid @enderror" id="adress"
+                                name="adress" value="{{ old('adress', $patient->adress) }}" placeholder="Adresse..."
+                                required />
+                            @error('adress')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label" for="sex">Sexe</label>
-                            <select class="form-control" id="sex" name="sex" required>
-                                <option value="Male" {{ $patient->sex == 'Male' ? 'selected' : '' }}>Masculin</option>
-                                <option value="Female" {{ $patient->sex == 'Female' ? 'selected' : '' }}>Féminin</option>
+                            <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex"
+                                required>
+                                <option value="" disabled>Choisissez le sexe</option>
+                                <option value="Male" {{ old('sex', $patient->sex) == 'Male' ? 'selected' : '' }}>Masculin
+                                </option>
+                                <option value="Female" {{ old('sex', $patient->sex) == 'Female' ? 'selected' : '' }}>
+                                    Féminin</option>
                             </select>
+                            @error('sex')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-success">Modifier</button>
+                        <a href="{{ route('patientindex') }}" class="btn btn-secondary">Annuler</a>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -34,10 +34,15 @@ class AnalysedispoController extends Controller
     $request->validate([
       'libelle' => 'required',
     ]);
+    $existingAnalyse = AnalyseDisponible::where('libelle', $request->libelle)->first();
+    if ($existingAnalyse) {
+      return redirect()
+        ->route('service.index', ['fragment' => 'analyses_dispo'])
+        ->with('error_analyse', 'Cette analyse existe déjà!');
+    }
 
     AnalyseDisponible::create($request->all());
 
-    // Redirige vers l'onglet "analyses_dispo"
     return redirect()->route('service.index', ['fragment' => 'analyses_dispo'])->with('success_analysis', 'Analyse ajoutée avec succès!');
   }
 
@@ -70,7 +75,8 @@ class AnalysedispoController extends Controller
     $an_disponible = AnalyseDisponible::findOrFail($id);
     $an_disponible->update($validated);
 
-    return redirect()->back()->with('success_analysis', 'Analyse modifié avec succès!');
+    return redirect()->route('service.index', ['fragment' => 'analyses_dispo'])->with('success_analysis', 'Analyse modifié avec succès!');
+
   }
 
   /**
@@ -82,6 +88,7 @@ class AnalysedispoController extends Controller
     $an_disponible = AnalyseDisponible::findOrFail($id);
     $an_disponible->delete();
 
-    return redirect()->back()->with('success_analysis', 'Analyse supprimée avec succès!');
+    return redirect()->route('service.index', ['fragment' => 'analyses_dispo'])->with('success_analysis', 'Analyse supprimé avec succès!');
   }
+
 }

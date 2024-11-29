@@ -15,7 +15,6 @@
                         <a href="{{ route('createpatient') }}" class="btn btn-primary">
                             Ajouter un patient
                         </a>
-                        <button type="button" class="btn btn-secondary">Secondary</button>
                     </div>
                 </div>
             </div>
@@ -72,7 +71,7 @@
 
         <hr class="my-12">
         <div class="text">
-            <h1>OHAYO SEKAI</h1>
+          
         </div>
     </div>
     <script src="{{ asset('js/search.js') }}"></script>
