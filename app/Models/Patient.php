@@ -20,12 +20,11 @@ class Patient extends Model
       $patient->uuid = (string) Str::uuid();
     });
   }
-
-
   public function consultations()
   {
-    return $this->hasMany(Consultation::class);
+    return $this->hasMany(Consultation::class, 'patient_id', 'id_pat');
   }
+
 
   public function appointment()
   {

@@ -8,7 +8,8 @@ class Prescription extends Model
 {
   //
   protected $primaryKey = 'id_pres';
-  protected $fillable = ['product', 'dosage'];
+  protected $fillable = ['product', 'dosage', 'consultation_id'];
+
   public function consultation()
   {
     return $this->belongsTo(Consultation::class);

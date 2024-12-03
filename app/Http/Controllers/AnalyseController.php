@@ -46,7 +46,7 @@ class AnalyseController extends Controller
     // Sauvegarder l'analyse
     $analyse->save();
 
-    return redirect()->route('docpat', ['fragment' => 'consultations'])->with('success_analyse', 'Analyse ajoutée avec succès!');
+    return redirect()->route('docpat', ['fragment' => 'analyses'])->with('success_analyse', 'Analyse ajoutée avec succès!');
   }
 
   /**

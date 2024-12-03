@@ -137,14 +137,18 @@ Route::post('/appointments', [AppointController::class, 'store'])->name('appoint
 Route::get('/appoints/edit', [AppointController::class, 'edit'])->name('appoint.edit');
 Route::post('/appoints/update', [AppointController::class, 'update'])->name('appoint.update');
 
-Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search'); 
+Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search');
 
 //Doctor routes
 Route::get('/doctorpat', [PatientController::class, 'indexdoctor'])->name('docpat');
-Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('patient.consultations');
-Route::post('/consultations/store', [ConsultationController::class, 'store'])->name('consultations.store');
+
+Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('consultations.index');
+
+Route::post('/consultations/store/{patient}', [ConsultationController::class, 'store'])->name('consultations.store');
 Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
 Route::post('/consultations/destroy/{id_cons}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
+Route::get('/consultations/{id}/print', [ConsultationController::class, 'print'])->name('consultations.print');
+
 
 //doctor-analyse
 Route::post('/patients/analyses', [AnalyseController::class, 'store'])->name('analysestore');
@@ -163,7 +167,9 @@ Route::post('/analyse/store', [AnalysedispoController::class, 'store'])->name('a
 Route::post('/analyse/destroy/{id}', [AnalysedispoController::class, 'destroy'])->name('analyses.destroy');
 
 //admin-consultation
-Route::get('/admin/history', [ConsultationController::class, 'history'])->name('consultation.history');
+Route::get('/admin/history', [ConsultationController::class, 'history'])->name('consultationadmin.history');
+
+
 
 //admin-spe
 Route::post('/admin/spe/store', [SpeController::class, 'store'])->name('specialite.store');
@@ -178,7 +184,7 @@ Route::get('/login', function () {
 //admin-user
 Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
 Route::post('/admin/userstore', [UserController::class, 'store'])->name('userstore');
-Route::put('/admin/user/{uuid}', [UserController::class, 'update'])->name('user.update');
+Route::post('/admin/user/{uuid}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/admin/user/{uuid}', [UserController::class, 'destroy'])->name('user.destroy');
 
 

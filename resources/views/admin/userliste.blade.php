@@ -105,21 +105,21 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->statut }}</td>
                                         <td>
-                                            <!-- Dropdown pour modifier ou supprimer -->
+
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Actions
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <!-- Bouton Modifier qui déclenche le modal -->
+
                                                     <li>
                                                         <a class="dropdown-item" data-bs-toggle="modal"
                                                             data-bs-target="#editUserModal-{{ $user->uuid }}">
                                                             <i class="fa fa-edit"></i> Modifier
                                                         </a>
                                                     </li>
-                                                    <!-- Bouton Supprimer qui déclenche le modal -->
+
                                                     <li>
                                                         <a class="dropdown-item text-danger" data-bs-toggle="modal"
                                                             data-bs-target="#deleteUserModal-{{ $user->uuid }}">
@@ -131,7 +131,7 @@
                                         </td>
                                     </tr>
 
-                                    <!-- Modal Modifier Utilisateur -->
+                                  
                                     <div class="modal fade" id="editUserModal-{{ $user->uuid }}" tabindex="-1">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

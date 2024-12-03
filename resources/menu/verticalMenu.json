@@ -10,11 +10,6 @@
           "url": "/patients",
           "name": "Liste",
           "slug": "dashboard-patient"
-        },
-        {
-          "url": "/",
-          "name": "Autres",
-          "slug": "dashboard-analytics"
         }
       ]
     },
@@ -27,11 +22,6 @@
           "url": "/appointments",
           "name": "Liste",
           "slug": "appoint_liste"
-        },
-        {
-          "url": "/appoint",
-          "name": "Without navbar",
-          "slug": "layouts-without-navbar"
         }
       ]
     },
@@ -44,11 +34,6 @@
           "url": "/doctorpat",
           "name": "Liste",
           "slug": "layouts-without-menu"
-        },
-        {
-          "url": "/appoint",
-          "name": "Without navbar",
-          "slug": "layouts-without-navbar"
         }
       ]
     },

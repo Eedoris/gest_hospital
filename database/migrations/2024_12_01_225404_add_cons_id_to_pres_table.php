@@ -10,14 +10,12 @@ return new class extends Migration {
    */
   public function up(): void
   {
-    //
-    Schema::create('prescriptions', function (Blueprint $table) {
-      $table->id('id_pres');
-      $table->string('product');
-      $table->string('dosage');
-     
+    Schema::table('prescriptions', function (Blueprint $table) {
+      //
+      $table->timestamps();
+      $table->unsignedBigInteger('consultation_id');
 
-
+      $table->foreign('consultation_id')->references('id_cons')->on('consultations');
     });
   }
 
@@ -26,6 +24,8 @@ return new class extends Migration {
    */
   public function down(): void
   {
-    //
+    Schema::table('prescriptions', function (Blueprint $table) {
+      //
+    });
   }
 };

@@ -114,9 +114,12 @@ class AppointController extends Controller
   public function update(Request $request)
   {
     try {
-
       $appointId = decrypt($request->token);
+      Log::info("ID décrypté : " . $appointId);
+
       $appoint = Appoint::findOrFail($appointId);
+      Log::info("Rendez-vous trouvé : " . $appoint->name);
+
 
       $validate = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
@@ -125,16 +128,17 @@ class AppointController extends Controller
         'date_app' => 'required|date|after_or_equal:today',
         'service_id' => 'required|integer|exists:services,id_serv',
       ]);
+
       if ($validate->fails()) {
         return redirect()->back()->withErrors($validate)->withInput();
       }
-
-      $appoint->name = $request->name;
-      $appoint->surname = $request->surname;
-      $appoint->contact = $request->contact;
-      $appoint->date_app = $request->date_app;
-      $appoint->service_id = $request->service_id;
-      $appoint->save();
+      $appoint->update([
+        'name' => $request->name,
+        'surname' => $request->surname,
+        'contact' => $request->contact,
+        'date_app' => $request->date_app,
+        'service_id' => $request->service_id,
+      ]);
 
       return redirect()->route('appointindex')->with('success', 'Rendez-vous mis à jour avec succès.');
 
@@ -143,6 +147,7 @@ class AppointController extends Controller
       return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
     }
   }
+
 
 
 

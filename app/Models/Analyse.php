@@ -8,7 +8,8 @@ class Analyse extends Model
 {
   //
   protected $primaryKey = 'id_an';
-  protected $fillable = ['libelle', 'state', 'date_res', 'result'];
+  protected $fillable = ['libelle', 'result', 'date_res', 'consultation_id'];
+
   public $timestamps = false;
   public function consultation()
   {

@@ -23,7 +23,7 @@
         <div class="card">
             <h5 class="card-header">Rendez-vous</Rendez-vous></h5>
             <div class="table-responsive text-nowrap">
-                <table class="table table-striped">
+                <table class="table table-striped" id="data_list">
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -64,4 +64,5 @@
                 </table>
             </div>
         </div>
+        <script src="{{ asset('js/search.js') }}"></script>
     @endsection

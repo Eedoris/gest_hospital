@@ -3,65 +3,44 @@
 @section('title', 'Historique des consultations')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         <h3>Historique des consultations</h3>
 
-        <form method="GET" action="{{ route('consultation.history') }}" class="mb-3">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="doctor_id">Filtrer par médecin</label>
-                    <select id="doctor_id" name="doctor_id" class="form-control">
-                        <option value="">Tous les médecins</option>
-                        @foreach ($doctors as $doctor)
-                            <option value="{{ $doctor->id_user }}"
-                                {{ request('doctor_id') == $doctor->id_user ? 'selected' : '' }}>
-                                {{ $doctor->name }} {{ $doctor->surname }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="patient_id">Filtrer par patient</label>
-                    <select id="patient_id" name="patient_id" class="form-control">
-                        <option value="">Tous les patients</option>
-                        @foreach ($patients as $patient)
-                            <option value="{{ $patient->id_pat }}"
-                                {{ request('patient_id') == $patient->id_pat ? 'selected' : '' }}>
-                                {{ $patient->name }} {{ $patient->surname }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrer</button>
-                </div>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </form>
+        @endif
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Patient</th>
-                    <th>Note</th>
-                    <th>Docteur</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($consultations as $consultation)
+        <div class="table-responsive">
+            <table class="table table-bordered"id="data_list">
+                <thead class="table-success">
                     <tr>
-                        <td>{{ $consultation->date_cons }}</td>
-                        <td>{{ $consultation->patient->name }} {{ $consultation->patient->surname }}</td>
-                        <td>{{ $consultation->note }}</td>
-                        <td>{{ $doctor->name }} {{ $doctor->surname }}</td>
-
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Patient</th>
+                        <th>Docteur</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">Aucune consultation trouvée</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($consultations as $consultation)
+                        <tr>
+                            <td>{{ $consultation->id_cons }}</td>
+                            <td>{{ $consultation->date_cons }}</td>
+                            <td>{{ $consultation->patient->name ?? 'N/A' }}
+                                <span>{{ $consultation->patient->surname ?? 'N/A' }}
+                            </td>
+                            <td>{{ $consultation->doctor->name ?? 'N/A' }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Aucune consultation trouvée.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
+    <script src="{{ asset('js/search.js') }}"></script>
 @endsection
