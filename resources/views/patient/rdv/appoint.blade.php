@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <!-- Striped Rows -->
+
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -30,6 +30,7 @@
                             <th>Prenom</th>
                             <th>Contact</th>
                             <th>Date du rendez-vous</th>
+                            <th>Heure</th>
                             <th>service</th>
                             <th></th>
 
@@ -42,6 +43,7 @@
                                 <td>{{ $appoint->surname }}</td>
                                 <td>{{ $appoint->contact }} </td>
                                 <td>{{ $appoint->date_app }} </td>
+                                <td>{{ $appoint->time_app }}</td>
                                 <td>{{ $appoint->service->serv_name }}</td>
 
 

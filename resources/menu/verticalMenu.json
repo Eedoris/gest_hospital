@@ -49,18 +49,13 @@
         },
         {
           "url": "/admin/doctor",
-          "name": "Gestion des docteurs",
+          "name": "Gestion des médécins",
           "slug": "layouts-without-menu"
         },
         {
           "url": "/adminservice",
-          "name": "Services et analyses",
+          "name": "Services et spécialités",
           "slug": "layouts-without-menu"
-        },
-        {
-          "url": "/admin/history",
-          "name": "Historique Consultation",
-          "slug": "layouts-without-navbar"
         }
       ]
     }

@@ -31,7 +31,6 @@
 
 
 
-        <!-- Tableau des Médecins -->
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -82,7 +81,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <!-- Médecin -->
+
                                         <div class="mb-3">
                                             <label for="user_id">Médecin</label>
                                             <select name="user_id" class="form-control" required>
@@ -95,14 +94,14 @@
                                             </select>
                                         </div>
 
-                                        <!-- Titre -->
+
                                         <div class="mb-3">
                                             <label for="doctor_title">Titre</label>
                                             <input type="text" class="form-control" name="doctor_title"
                                                 value="{{ $doctor->doctor_title }}" required>
                                         </div>
 
-                                        <!-- Spécialité -->
+
                                         <div class="mb-3">
                                             <label for="id_spe">Spécialité</label>
                                             <select name="id_spe" class="form-control" required>
@@ -115,7 +114,7 @@
                                             </select>
                                         </div>
 
-                                        <!-- Service -->
+
                                         <div class="mb-3">
                                             <label for="service_id">Service</label>
                                             <select name="service_id" class="form-control" required>

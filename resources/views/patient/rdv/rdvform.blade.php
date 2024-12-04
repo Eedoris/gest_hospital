@@ -57,6 +57,14 @@
                                 value="{{ $appoint->date_app }}" required />
                         </div>
 
+                        <!-- Heure du rendez-vous -->
+                        <div class="mb-3">
+                            <label class="form-label" for="time_rdv">Heure</label>
+                            <input type="time" class="form-control" id="time_rdv" name="time_app"
+                                value="{{ $appoint->time_app }}" required />
+                        </div>
+
+
                         <!-- Sélectionner un service -->
                         <div class="mb-3">
                             <label class="form-label" for="id_serv">Sélectionner un service</label>
@@ -84,9 +92,9 @@
             $('#patient_name').on('input', function() {
                 var name = $(this).val().trim();
 
-                if (name.length >= 2) { // Rechercher après 2 caractères
+                if (name.length >= 2) {
                     $.ajax({
-                        url: "{{ route('patients.search') }}", // Appelle directement une route Laravel
+                        url: "{{ route('patients.search') }}",
                         method: 'GET',
                         data: {
                             name: name
@@ -125,7 +133,7 @@
                 }
             });
 
-            // Lorsqu'un patient est sélectionné dans les résultats
+
             $(document).on('click', '.patient-item', function() {
                 var name = $(this).data('name');
                 var surname = $(this).data('surname');
@@ -135,7 +143,7 @@
                 $('#surname').val(surname);
                 $('#contact').val(contact);
 
-                // Masquer les résultats après sélection
+
                 $('#patient-results').empty();
             });
         });

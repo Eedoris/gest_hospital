@@ -187,7 +187,7 @@
                             </div>
                         </li>
 
-                        <!-- Modal Supprimer Analyse -->
+                      
                         <div class="modal fade" id="deleteModalAnalyse-{{ $an_disponible->id }}" tabindex="-1"
                             aria-labelledby="deleteModalLabelAnalyse" aria-hidden="true">
                             <div class="modal-dialog">

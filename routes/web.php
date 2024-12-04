@@ -145,9 +145,14 @@ Route::get('/doctorpat', [PatientController::class, 'indexdoctor'])->name('docpa
 Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('consultations.index');
 
 Route::post('/consultations/store/{patient}', [ConsultationController::class, 'store'])->name('consultations.store');
-Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
+//Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
 Route::post('/consultations/destroy/{id_cons}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
 Route::get('/consultations/{id}/print', [ConsultationController::class, 'print'])->name('consultations.print');
+
+Route::get('consultations/{id}/create', [ConsultationController::class, 'edit'])->name('consultations.create');
+Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('consultations.edit');
+Route::post('consultations/{id}', [ConsultationController::class, 'update'])->name('consultations.update');
+
 
 
 //doctor-analyse

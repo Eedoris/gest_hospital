@@ -44,10 +44,12 @@ class AppointController extends Controller
         'surname' => 'required|string|max:255',
         'contact' => ['required', 'string', 'regex:/^(\+228)?\d{8}$/'],
         'date_app' => 'required|date|after_or_equal:today',
+        'time_app' => 'required|date_format:H:i',
         'service_id' => 'required|integer|exists:services,id_serv',
       ], [
         'contact.regex' => 'Le numéro de téléphone doit commencer par +228 ou être suivi de 8 chiffres.',
         'date_app.after_or_equal' => 'La date de rendez-vous doit être égale ou postérieure à aujourd\'hui.',
+        'time_app.date_format' => 'Le format de l\'heure doit être HH:MM.'
       ]);
 
       if ($validate->fails()) {
@@ -64,6 +66,7 @@ class AppointController extends Controller
         'surname' => $request->surname,
         'contact' => $request->contact,
         'date_app' => $request->date_app,
+        'time_app' => $request->time_app,
         'service_id' => $request->service_id,
       ]);
 
@@ -126,6 +129,7 @@ class AppointController extends Controller
         'surname' => 'required|string|max:255',
         'contact' => ['required', 'string', 'regex:/^(\+228)?\d{8}$/'],
         'date_app' => 'required|date|after_or_equal:today',
+        'time_app' => 'required|date_format:H:i',
         'service_id' => 'required|integer|exists:services,id_serv',
       ]);
 
@@ -137,6 +141,7 @@ class AppointController extends Controller
         'surname' => $request->surname,
         'contact' => $request->contact,
         'date_app' => $request->date_app,
+        'time_app' => $request->time_app,
         'service_id' => $request->service_id,
       ]);
 

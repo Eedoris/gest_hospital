@@ -26,6 +26,13 @@ class ConsultationController extends Controller
 
     return view('qoctor.consultation', compact('patient', 'consultations'));
   }
+  public function create($id)
+  {
+    $patient = Patient::findOrFail($id);
+    $consultations = collect(); // Collection vide
+    return view('qoctor.consultation', compact('patient', 'consultations'));
+  }
+
 
 
 
@@ -81,7 +88,6 @@ class ConsultationController extends Controller
   }
 
 
-
   /* public function store(Request $request, $patient)
    {
      // Validation des données
@@ -129,6 +135,15 @@ class ConsultationController extends Controller
      return redirect()->route('consultations.index', ['patientId' => $patientId])
        ->with('success', 'Consultation ajoutée avec succès');
    }*/
+  public function edit($id)
+  {
+    $consultation = Consultation::with(['analyses', 'prescriptions'])->findOrFail($id);
+    $patient = $consultation->patient;
+    $consultations = $patient->consultations()->orderBy('date_cons', 'desc')->get();
+    return view('qoctor.consultation', compact('consultation', 'patient', 'consultations'));
+  }
+
+
 
 
   public function update(Request $request, $id_cons)
@@ -144,29 +159,69 @@ class ConsultationController extends Controller
 
     $consultation = Consultation::findOrFail($id_cons);
 
-
+    // Mise à jour de la consultation
     $consultation->date_cons = $request->date_cons;
     $consultation->note = $request->note;
     $consultation->save();
 
+    // Gestion des suppressions d'analyses
+    if ($request->filled('analyses_to_delete')) {
+      $analysesToDelete = explode(',', $request->analyses_to_delete);
+      Analyse::whereIn('id_an', $analysesToDelete)->delete();
+    }
 
-    foreach ($request->analyses as $id_an => $analyseData) {
-      $analyse = Analyse::find($id_an);
-      if ($analyse) {
-        $analyse->update($analyseData);
+    // Mise à jour des analyses
+    if ($request->has('analyses')) {
+      foreach ($request->analyses as $id_an => $analyseData) {
+        if (is_numeric($id_an)) {
+          // Si l'ID existe, on met à jour
+          $analyse = Analyse::find($id_an);
+          if ($analyse) {
+            $analyse->update($analyseData);
+          }
+        } elseif (!empty($analyseData['libelle'])) {
+          // Si l'ID n'existe pas, on crée une nouvelle analyse
+          $consultation->analyses()->create([
+            'libelle' => $analyseData['libelle'],
+            'result' => $analyseData['result'] ?? null,
+            'date_res' => now(),
+          ]);
+        }
       }
     }
 
-    foreach ($request->prescriptions as $id_pres => $prescriptionData) {
-      $prescription = Prescription::find($id_pres);
-      if ($prescription) {
-        $prescription->update($prescriptionData);
+    // Gestion des suppressions de prescriptions
+    if ($request->filled('prescriptions_to_delete')) {
+      \Log::info('Prescriptions to delete: ' . $request->prescriptions_to_delete);
+      $prescriptionsToDelete = explode(',', $request->prescriptions_to_delete);
+      Prescription::whereIn('id_pres', $prescriptionsToDelete)->delete();
+
+
+    }
+
+
+    // Mise à jour des prescriptions
+    if ($request->has('prescriptions')) {
+      foreach ($request->prescriptions as $id_pres => $prescriptionData) {
+        if (is_numeric($id_pres)) {
+          // Si l'ID existe, on met à jour
+          $prescription = Prescription::find($id_pres);
+          if ($prescription) {
+            $prescription->update($prescriptionData);
+          }
+        } elseif (!empty($prescriptionData['product'])) {
+          // Si l'ID n'existe pas, on crée une nouvelle prescription
+          $consultation->prescriptions()->create([
+            'product' => $prescriptionData['product'],
+            'dosage' => $prescriptionData['dosage'],
+          ]);
+        }
       }
     }
 
-    return redirect()->back()->with('success_history', 'Consultation mise à jour avec succès !');
+    return redirect()->route('consultations.index', [$consultation->patient->uuid, 'fragment' => 'historique'])
+      ->with('success_history', 'Consultation mise à jour avec succès !');
   }
-
 
 
   public function print($id)
@@ -187,10 +242,12 @@ class ConsultationController extends Controller
   }
   public function history()
   {
-   
+
     $consultations = Consultation::with(['doctor', 'patient'])->get();
 
     return view('admin.history', compact('consultations'));
   }
+
+
 
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <!-- Basic Layout -->
+
     <div class="row">
         <div class="col-xl">
             <div class="card mb-6">
@@ -53,6 +53,10 @@
                             <label class="form-label" for="date_rdv">Date</label>
                             <input type="date" class="form-control" id="date_rdv" name="date_app" required />
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="time_app">Heure</label>
+                            <input type="time" class="form-control" id="time_app" name="time_app" required />
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="id_serv">Sélectionner un service</label>
@@ -73,22 +77,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Recherche des patients lorsque l'utilisateur tape dans le champ "Nom du patient"
-            $('#patient_name').on('input', function() {
-                var name = $(this).val().trim(); // Supprimer les espaces inutiles
 
-                if (name.length >= 2) { // Déclencher la recherche après 2 caractères
+            $('#patient_name').on('input', function() {
+                var name = $(this).val().trim();
+
+                if (name.length >= 2) {
                     $.ajax({
-                        url: "{{ route('patients.search') }}", // Appelle directement une route Laravel
+                        url: "{{ route('patients.search') }}",
                         method: 'GET',
                         data: {
                             name: name
-                        }, // Envoie le nom au backend
+                        },
                         success: function(response) {
-                            // Effacer les anciens résultats
+
                             $('#patient-results').empty();
 
-                            // Si des patients sont trouvés
+
                             if (response.length > 0) {
                                 var resultsHtml = '<ul class="list-group">';
                                 response.forEach(function(patient) {
@@ -115,23 +119,23 @@
                         }
                     });
                 } else {
-                    // Si moins de 2 caractères, effacer les résultats
+
                     $('#patient-results').empty();
                 }
             });
 
-            // Lorsqu'un patient est sélectionné dans les résultats
+
             $(document).on('click', '.patient-item', function() {
                 var name = $(this).data('name');
                 var surname = $(this).data('surname');
                 var contact = $(this).data('contact');
 
-                // Remplir les champs avec les données du patient sélectionné
+
                 $('#patient_name').val(name);
                 $('#basic-default-company').val(surname);
                 $('#contact').val(contact);
 
-                // Masquer les résultats après sélection
+
                 $('#patient-results').empty();
             });
         });

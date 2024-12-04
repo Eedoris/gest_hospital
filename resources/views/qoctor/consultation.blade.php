@@ -34,12 +34,14 @@
         <div class="tab-content mt-4">
 
             <div class="tab-pane fade @if (request()->get('fragment') == 'consultations' || !request()->has('fragment')) show active @endif" id="consultations">
-                @include('qoctor.add')
+                @include('qoctor.form')
             </div>
 
             <div class="tab-pane fade @if (request()->get('fragment') == 'historique') show active @endif" id="historique">
                 @include('qoctor.history')
             </div>
+
+
         </div>
     </div>
 @endsection
