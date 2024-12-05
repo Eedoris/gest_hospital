@@ -51,7 +51,7 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="date_rdv">Date</label>
-                            <input type="date" class="form-control" id="date_rdv" name="date_app" required />
+                            <input type="date" class="form-control" id="date_rdv" max="{{ date('Y-m-d') }}" name="date_app" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="time_app">Heure</label>

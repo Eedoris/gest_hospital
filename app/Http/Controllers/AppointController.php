@@ -123,7 +123,6 @@ class AppointController extends Controller
       $appoint = Appoint::findOrFail($appointId);
       Log::info("Rendez-vous trouvé : " . $appoint->name);
 
-
       $validate = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
         'surname' => 'required|string|max:255',

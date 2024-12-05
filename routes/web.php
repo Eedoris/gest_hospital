@@ -7,6 +7,7 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpeController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
@@ -58,7 +59,8 @@ use App\Http\Controllers\PatientController;
 //
 
 // Main Page Route
-Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics');
+
+Route::get('/', [PatientController::class, 'index'])->name('patientindex');
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
@@ -198,3 +200,8 @@ Route::delete('/admin/user/{uuid}', [UserController::class, 'destroy'])->name('u
 Route::get('/admin/doctor', [DoctorController::class, 'index'])->name('doctor.index');
 Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctor.store');
 Route::post('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+
+//admin_static
+
+Route::get('/stats', [StatisticsController::class, 'index'])->name('statistics.index');
+Route::get('/stats/export', [StatisticsController::class, 'exportStatistics'])->name('statistics.export');

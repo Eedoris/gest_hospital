@@ -43,6 +43,7 @@ class ConsultationController extends Controller
       'date_cons' => [
         'required',
         'date',
+        'date_equals:today',
         function ($attribute, $value, $fail) {
           if ($value !== now()->toDateString()) {
             $fail('La date de la consultation doit être aujourd\'hui.');
@@ -149,7 +150,7 @@ class ConsultationController extends Controller
   public function update(Request $request, $id_cons)
   {
     $request->validate([
-      'date_cons' => 'required|date',
+      'date_cons' => 'required|date|date_equals:today',
       'note' => 'required|string|max:255',
       'analyses.*.libelle' => 'nullable|string',
       'analyses.*.result' => 'nullable|string',

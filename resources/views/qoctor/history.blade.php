@@ -42,16 +42,16 @@
 
 
                 </div>
-                <div class="card-footer d-md-flex gap-2">
+                <div class="card-footer demo-inline-spacing">
                     <a href="{{ route('consultations.edit', $consultation->id_cons) }}"
-                        class="btn btn-warning  btn-sm col-sm-auto">Modifier</a>
+                        class="btn btn-warning  btn-sm ">Modifier</a>
 
-                    <button class="btn btn-danger btn-sm col-sm-auto" data-bs-toggle="modal"
+                    <button class="btn btn-danger btn-sm " data-bs-toggle="modal"
                         data-bs-target="#deleteConsultationModal-{{ $consultation->id_cons }}">Supprimer</button>
 
                     <!-- Imprimer -->
                     <a href="{{ route('consultations.print', $consultation->id_cons) }}"
-                        class="btn btn-secondary btn-sm  col-sm-auto" target="_blank">Imprimer</a>
+                        class="btn btn-secondary btn-sm  " target="_blank">Imprimer</a>
                 </div>
             </div>
         </div>

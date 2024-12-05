@@ -1,7 +1,7 @@
 {
   "menu": [
     {
-      "url": "/",
+      "url": "/patients",
       "name": "Patients",
       "icon": "menu-icon tf-icons bx bx-home-smile",
       "slug": "dashboard",
@@ -9,14 +9,14 @@
         {
           "url": "/patients",
           "name": "Liste",
-          "slug": "dashboard-patient"
+          "slug": "dashboard-analytics"
         }
       ]
     },
     {
       "name": "Rendez-vous",
       "icon": "menu-icon tf-icons bx bx-layout",
-      "slug": "Rendez-vous",
+      "slug": "Layouts",
       "submenu": [
         {
           "url": "/appointments",
@@ -38,10 +38,16 @@
       ]
     },
     {
+      "url": "/stats",
       "name": "Options",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "Admin",
       "submenu": [
+        {
+          "url": "/stats",
+          "name": "Statistique",
+          "slug": ""
+        },
         {
           "url": "/admin/user",
           "name": "Gestion des utilisateurs",

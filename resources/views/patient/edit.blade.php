@@ -46,7 +46,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="date_of_birth">Date de naissance</label>
                             <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                id="date_of_birth" name="date_of_birth"
+                                id="date_of_birth" name="date_of_birth"  max="{{ date('Y-m-d') }}"
                                 value="{{ old('date_of_birth', $patient->date_of_birth) }}" required />
                             @error('date_of_birth')
                                 <span class="text-danger">{{ $message }}</span>

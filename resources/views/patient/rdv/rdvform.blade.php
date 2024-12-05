@@ -27,8 +27,6 @@
                         @csrf
                         <input type="hidden" name="token" value="{{ encrypt($appoint->id_appoint) }}">
 
-
-                        <!-- Recherche du patient -->
                         <div class="mb-6">
                             <label class="form-label" for="patient_name">Nom du patient</label>
                             <input type="text" class="form-control" id="patient_name" name="name"
@@ -36,14 +34,14 @@
                         </div>
                         <div id="patient-results"></div>
 
-                        <!-- Contact du patient -->
+
                         <div class="mb-6">
                             <label class="form-label" for="contact">Contact</label>
                             <input type="text" class="form-control" id="contact" name="contact"
                                 value="{{ $appoint->contact }}" readonly>
                         </div>
 
-                        <!-- Prénom -->
+
                         <div class="mb-6">
                             <label class="form-label" for="surname">Prénom</label>
                             <input type="text" class="form-control" id="surname" name="surname"
@@ -53,11 +51,10 @@
                         <!-- Date du rendez-vous -->
                         <div class="mb-3">
                             <label class="form-label" for="date_rdv">Date</label>
-                            <input type="date" class="form-control" id="date_rdv" name="date_app"
+                            <input type="date" class="form-control" id="date_rdv" name="date_app" max="{{ date('Y-m-d') }}" 
                                 value="{{ $appoint->date_app }}" required />
                         </div>
 
-                        <!-- Heure du rendez-vous -->
                         <div class="mb-3">
                             <label class="form-label" for="time_rdv">Heure</label>
                             <input type="time" class="form-control" id="time_rdv" name="time_app"
@@ -65,7 +62,6 @@
                         </div>
 
 
-                        <!-- Sélectionner un service -->
                         <div class="mb-3">
                             <label class="form-label" for="id_serv">Sélectionner un service</label>
                             <select class="form-control" id="id_serv" name="service_id" required>
