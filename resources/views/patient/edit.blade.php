@@ -46,7 +46,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="date_of_birth">Date de naissance</label>
                             <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
-                                id="date_of_birth" name="date_of_birth"  max="{{ date('Y-m-d') }}"
+                                id="date_of_birth" name="date_of_birth" max="{{ date('Y-m-d') }}"
                                 value="{{ old('date_of_birth', $patient->date_of_birth) }}" required />
                             @error('date_of_birth')
                                 <span class="text-danger">{{ $message }}</span>
@@ -68,9 +68,10 @@
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex"
                                 required>
                                 <option value="" disabled>Choisissez le sexe</option>
-                                <option value="Male" {{ old('sex', $patient->sex) == 'Male' ? 'selected' : '' }}>Masculin
+                                <option value="Masculin" {{ old('sex', $patient->sex) == 'Masculin' ? 'selected' : '' }}>
+                                    Masculin
                                 </option>
-                                <option value="Female" {{ old('sex', $patient->sex) == 'Female' ? 'selected' : '' }}>
+                                <option value="Féminin" {{ old('sex', $patient->sex) == 'Feminin' ? 'selected' : '' }}>
                                     Féminin</option>
                             </select>
                             @error('sex')
