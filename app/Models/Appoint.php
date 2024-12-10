@@ -11,7 +11,12 @@ class Appoint extends Model
   protected $primaryKey = 'id_appoint';
   public $timestamps = false;
 
-  protected $fillable = ['name', 'surname', 'contact', 'date_app', 'time_app', 'service_id'];
+  protected $fillable = ['name', 'surname', 'contact', 'date_app', 'time_app', 'service_id', 'status'];
+
+  protected $casts = [
+    'date_app' => 'datetime',
+  ];
+
 
   public function user()
   {

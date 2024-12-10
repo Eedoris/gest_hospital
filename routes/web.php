@@ -139,6 +139,13 @@ Route::post('/appointments', [AppointController::class, 'store'])->name('appoint
 Route::get('/appoints/edit', [AppointController::class, 'edit'])->name('appoint.edit');
 Route::post('/appoints/update', [AppointController::class, 'update'])->name('appoint.update');
 
+Route::get('/appoints/cancel/{id}', [AppointController::class, 'cancel'])->name('appoint.cancel');
+Route::get('/appoints/complete/{id}', [AppointController::class, 'complete'])->name('appoint.complete');
+Route::get('/appoint/{id}/resform', [AppointController::class, 'showRescheduleForm'])->name('appoint.showRescheduleForm');
+
+Route::post('/appoint/reschedule', [AppointController::class, 'reschedule'])->name('appoint.reschedule');
+
+
 Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search');
 
 //Doctor routes

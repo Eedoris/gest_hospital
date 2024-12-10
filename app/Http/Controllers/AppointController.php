@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 
 class AppointController extends Controller
 {
@@ -19,8 +20,13 @@ class AppointController extends Controller
   public function index()
   {
     $services = Service::all();
-    $appoints = Appoint::with('service')->get();
-    return view('patient.rdv.appoint', compact('appoints'));
+    // Filtrer uniquement les rendez-vous avec le statut "Prévu" ou "Reprogrammé"
+    $appoints = Appoint::with('service')->whereIn('status', ['Prévu', 'Reprogrammé'])->get();
+
+    $appointments = Appoint::with('service')->whereIn('status', ['Annulé'])->get();
+    $completes = Appoint::with('service')->whereIn('status', ['Effectué'])->get();
+
+    return view('patient.rdv.appoint', compact('appoints', 'services', 'appointments', 'completes'));
   }
 
   /**
@@ -128,7 +134,7 @@ class AppointController extends Controller
         'surname' => 'required|string|max:255',
         'contact' => ['required', 'string', 'regex:/^(\+228)?\d{8}$/'],
         'date_app' => 'required|date|after_or_equal:today',
-        'time_app' => 'required|date_format:H:i',
+        'time_app' => 'required',
         'service_id' => 'required|integer|exists:services,id_serv',
       ]);
 
@@ -149,6 +155,89 @@ class AppointController extends Controller
     } catch (Exception $e) {
       Log::error('Erreur lors de la mise à jour : ' . $e->getMessage());
       return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
+    }
+  }
+
+
+  public function cancel($id)
+  {
+    $id = decrypt($id);
+    $appointment = Appoint::find($id);
+
+    if ($appointment) {
+      $appointment->status = 'Annulé';
+      $appointment->save();
+    }
+
+    return redirect()->route('appointindex', ['tab' => 'annule']);
+  }
+
+
+  public function complete($id)
+  {
+    try {
+      $decryptedId = Crypt::decrypt($id);
+      $appoint = Appoint::findOrFail($decryptedId);
+      $appoint->status = 'Effectué';
+      $appoint->save();
+
+      return redirect()->route('appointindex')->with('success', 'Rendez-vous marqué comme effectué.');
+    } catch (Exception $e) {
+      Log::error('Erreur lors de la complétion : ' . $e->getMessage());
+      return redirect()->route('appointindex')->with('error', 'Erreur lors de la complétion.');
+    }
+  }
+
+  /*programmer*/
+
+  public function showRescheduleForm($id)
+  {
+    try {
+      $token = encrypt($id); // Crée un token encrypté
+      $appoint = Appoint::findOrFail($id);
+      return view('patient.rdv.reschedule', compact('appoint', 'token'));
+    } catch (Exception $e) {
+      Log::error('Erreur lors de l\'affichage du formulaire de reprogrammation : ' . $e->getMessage());
+      return redirect()->route('appointindex')->with('error', 'Erreur lors de l\'affichage du formulaire.');
+    }
+  }
+
+
+  public function reschedule(Request $request)
+  {
+    try {
+      // Décryptage de l'ID du rendez-vous
+      $appointId = decrypt($request->token);
+
+      // Récupération du rendez-vous
+      $appoint = Appoint::findOrFail($appointId);
+
+      // Validation des nouvelles données
+      $validate = Validator::make($request->all(), [
+        'date_app' => 'required|date|after_or_equal:today',
+        'time_app' => 'required|date_format:H:i',
+      ], [
+        'date_app.after_or_equal' => 'La nouvelle date doit être égale ou postérieure à aujourd\'hui.',
+        'time_app.date_format' => 'Le format de l\'heure doit être HH:MM.',
+      ]);
+
+      if ($validate->fails()) {
+        return redirect()->back()
+          ->withErrors($validate)
+          ->withInput();
+      }
+
+      // Mise à jour des données du rendez-vous
+      $appoint->update([
+        'date_app' => $request->date_app,
+        'time_app' => $request->time_app,
+        'status' => 'Reprogrammé', // Mise à jour du statut
+      ]);
+
+      return redirect()->route('appointindex')->with('success', 'Rendez-vous reprogrammé avec succès.');
+    } catch (Exception $e) {
+      Log::error('Erreur lors de la reprogrammation : ' . $e->getMessage());
+      return redirect()->route('appointindex')->with('error', 'Erreur : ' . $e->getMessage());
     }
   }
 
