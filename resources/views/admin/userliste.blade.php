@@ -43,11 +43,16 @@
                                 <input type="email" name="email" id="email" class="form-control" required>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6 mb-3 form-password-toggle">
                                     <label for="password" class="form-label">Mot de passe</label>
-                                    <input type="password" name="password" id="password" class="form-control" required>
-
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" name="password" id="password" class="form-control"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" required />
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6 mb-3">
                                     <label for="password_confirmation" class="form-label">Confirmer le mot de passe</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation"
@@ -87,7 +92,7 @@
                 <div class="card">
                     <h5 class="card-header">Liste des utilisateurs</h5>
                     <div class="table-responsive text-nowrap">
-                        <table class="table">
+                        <table class="table" id="data_list">
                             <thead>
                                 <tr>
                                     <th>Nom</th>
@@ -131,7 +136,7 @@
                                         </td>
                                     </tr>
 
-                                  
+
                                     <div class="modal fade" id="editUserModal-{{ $user->uuid }}" tabindex="-1">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -233,7 +238,7 @@
                         </thead>
                         <tbody>
                             @foreach ($usersByRole as $role)
-                                <tr>
+                                <tr class="item">
                                     <td>{{ $role->statut ?? 'Non spécifié' }}</td>
                                     <td>{{ $role->count }}</td>
                                 </tr>
@@ -244,4 +249,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/search.js') }}"></script>
 @endsection

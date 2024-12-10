@@ -10,11 +10,11 @@
                     Services
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link @if (request()->get('fragment') == 'analyses_dispo') active @endif" data-bs-toggle="tab"
-                    href="#analyses_dispo">
-                    Analyses
-                </a>
+            <!--<li class="nav-item">
+                    <a class="nav-link @if (request()->get('fragment') == 'analyses_dispo') active @endif" data-bs-toggle="tab"
+                        href="#analyses_dispo">
+                        Analyses
+                    </a>-->
             </li>
             <li class="nav-item">
                 <a class="nav-link @if (request()->get('fragment') == 'specialite') active @endif" data-bs-toggle="tab" href="#specialite">
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <!--<button type="button" class="btn btn-secondary"
-                                                                                                                                                                                                                                                                                                                                      data-bs-dismiss="modal">Annuler</button>-->
+                                                                                                                                                                                                                                                                                                                                          data-bs-dismiss="modal">Annuler</button>-->
                                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                                         </div>
                                     </form>
@@ -128,7 +128,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <!--<button type="button" class="btn btn-secondary"
-                                                                                                                                                                                                                                            data-bs-dismiss="modal">Annuler</button>-->
+                                                                                                                                                                                                                                                data-bs-dismiss="modal">Annuler</button>-->
                                         <form id="delete-service-{{ $service->id_serv }}"
                                             action="{{ route('services.destroy', $service->id_serv) }}" method="POST"
                                             style="display: inline;">
@@ -187,7 +187,7 @@
                             </div>
                         </li>
 
-                      
+
                         <div class="modal fade" id="deleteModalAnalyse-{{ $an_disponible->id }}" tabindex="-1"
                             aria-labelledby="deleteModalLabelAnalyse" aria-hidden="true">
                             <div class="modal-dialog">
@@ -285,7 +285,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <!--<button type="button" class="btn btn-secondary"
-                                                                                                                                                                                                                                                                                                                                    data-bs-dismiss="modal">Annuler</button>-->
+                                                                                                                                                                                                                                                                                                                                        data-bs-dismiss="modal">Annuler</button>-->
                                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                                         </div>
                                     </form>

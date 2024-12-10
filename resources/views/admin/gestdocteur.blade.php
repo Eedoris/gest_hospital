@@ -30,8 +30,7 @@
         @endif
 
 
-
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="data_list">
             <thead>
                 <tr>
                     <th>Nom</th>
@@ -219,4 +218,5 @@
         </div>
 
     </div>
+    <script src="{{ asset('js/search.js') }}"></script>
 @endsection

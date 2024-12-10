@@ -44,14 +44,14 @@
                 </div>
                 <div class="card-footer demo-inline-spacing">
                     <a href="{{ route('consultations.edit', $consultation->id_cons) }}"
-                        class="btn btn-warning  btn-sm ">Modifier</a>
+                        class="btn btn-primary  btn ">Modifier</a>
 
-                    <button class="btn btn-danger btn-sm " data-bs-toggle="modal"
-                        data-bs-target="#deleteConsultationModal-{{ $consultation->id_cons }}">Supprimer</button>
+                    <!--<button class="btn btn-danger btn-sm " data-bs-toggle="modal"
+                    data-bs-target="#deleteConsultationModal-{{ $consultation->id_cons }}">Supprimer</button>-->
 
                     <!-- Imprimer -->
-                    <a href="{{ route('consultations.print', $consultation->id_cons) }}"
-                        class="btn btn-secondary btn-sm  " target="_blank">Imprimer</a>
+                    <a href="{{ route('consultations.print', $consultation->id_cons) }}" class="btn btn-secondary btn "
+                        target="_blank">Imprimer</a>
                 </div>
             </div>
         </div>

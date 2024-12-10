@@ -5,13 +5,34 @@
 @section('content')
     <div class="container">
         <h1 class="my-4 text-center">Statistiques</h1>
-
+        <!--  <a href="{{ route('statistics.export') }}" class="btn btn-primary ">Exporter les statistiques</a>-->
 
         <hr>
 
         <div>
-            <a href="{{ route('statistics.export') }}" class="btn btn-primary ">Exporter les statistiques</a>
+            <div class="d-flex justify-content-start">
 
+                <button type="submit" class="btn btn-primary">Exporter</button>
+                {{-- <form method="GET" action="{{ route('statistics.export') }}">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="start_date">Date de début :</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control"
+                                value="{{ request('start_date') }}">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="end_date" class="mt-2">Date de fin :</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control"
+                                value="{{ request('end_date') }}">
+                        </div>
+                        <div class="col-md-2 align-self-end">
+                            <button type="submit" class="btn btn-primary">Exporter</button>
+                        </div>
+                    </div>
+
+                </form> --}}
+
+            </div>
             <div class="d-flex justify-content-end">
 
                 <form method="GET" action="{{ route('statistics.index') }}" class="md-1">

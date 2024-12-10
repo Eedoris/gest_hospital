@@ -14,7 +14,7 @@
         @endif
 
         <div class="table-responsive">
-            <table class="table table-bordered"id="data_list">
+            <table class="table table-bordered" id="data_list">
                 <thead class="table-success">
                     <tr>
                         <th>#</th>
