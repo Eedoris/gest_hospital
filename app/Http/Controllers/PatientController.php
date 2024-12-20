@@ -18,7 +18,8 @@ class PatientController extends Controller
   public function index()
   {
     //
-    $patients = Patient::all();
+    $patients = Patient::orderBy('created_at', 'asc')->get();
+
     return view('patient.index', compact('patients'));
 
   }
@@ -91,9 +92,12 @@ class PatientController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show($uuid)
   {
-    //
+    $patient = Patient::where('uuid', $uuid)->with('consultations')->firstOrFail();
+
+    // Affiche la vue pour le dossier avec l'option d'impression
+    return view('qoctor.show', compact('patient'));
   }
 
   /**
@@ -140,6 +144,8 @@ class PatientController extends Controller
 
 
   }
+
+
 
   /**
    * Remove the specified resource from storage.

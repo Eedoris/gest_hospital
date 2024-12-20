@@ -8,7 +8,7 @@ class Consultation extends Model
 {
   //
   protected $primaryKey = 'id_cons';
-  protected $fillable = ['date_cons', 'note', 'doctor_id', 'patient_id'];
+  protected $fillable = ['date_cons', 'note', 'symptome', 'doctor_id', 'patient_id'];
 
   public function doctor()
   {

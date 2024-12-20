@@ -14,7 +14,15 @@
         </div>
 
         <div class="mb-3">
-            <label for="note" class="form-label">Note/Diagnostic</label>
+            <label for="symptome" class="form-label">Note/Diagnostic</label>
+            <textarea name="symptome" id="symptome" class="form-control" rows="4" required>{{ old('symptome', $consultation->sypmtome) }}</textarea>
+            @error('symptome')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="note" class="form-label">Diagnostic</label>
             <textarea name="note" id="note" class="form-control" rows="4" required>{{ old('note', $consultation->note) }}</textarea>
             @error('note')
                 <div class="text-danger">{{ $message }}</div>

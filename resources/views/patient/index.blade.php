@@ -1,5 +1,8 @@
 @extends('layouts/contentNavbarLayout')
 
+
+{{-- @extends('layouts/men') --}}
+
 @section('title', 'Tables - Basic Tables')
 
 @section('content')
@@ -45,7 +48,7 @@
                             <tr class="item">
                                 <td>{{ $patient->name }}</td>
                                 <td>{{ $patient->surname }}</td>
-                                <td>{{ $patient->date_of_birth }} </td>
+                                <td>{{ \Carbon\Carbon::parse($patient->date_of_birth)->format('d/m/Y') }} </td>
                                 <td>{{ $patient->sex }}</td>
                                 <td>{{ $patient->adress }}</td>
                                 <td>{{ $patient->contact }}</td>
@@ -71,8 +74,25 @@
 
         <hr class="my-12">
         <div class="text">
-          
+
         </div>
     </div>
-    <script src="{{ asset('js/search.js') }}"></script>
+    <script>
+        document.getElementById('global_search').addEventListener('input', function() {
+            filterTable('data_list', 'global_search');
+        });
+
+        function filterTable(containerId, searchInputId) {
+            let query = document.getElementById(searchInputId).value.toLowerCase();
+            let rows = document.querySelectorAll(`#${containerId} tr`);
+
+            rows.forEach(row => {
+                let rowText = Array.from(row.querySelectorAll('td')).map(cell => cell.textContent.toLowerCase())
+                    .join(' ');
+                row.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        }
+    </script>
+
+
 @endsection

@@ -42,10 +42,12 @@
         <div class="nav-item d-flex align-items-center">
             <i class="bx bx-search bx-md"></i>
             <input type="text" id="global_search" class="form-control border-0 shadow-none ps-1 ps-sm-2"
-                placeholder="Search..." aria-label="Search..." onkeyup="filterTable('data_list', 'global_search')">
+                placeholder="Search..." aria-label="Search...">
 
         </div>
     </div>
+
+
     <!-- /Search -->
     <ul class="navbar-nav flex-row align-items-center ms-auto">
 

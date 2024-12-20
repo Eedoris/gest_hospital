@@ -19,15 +19,24 @@
         <div class="mb-3">
             <label for="date_cons" class="form-label">Date de consultation</label>
             <input type="date" name="date_cons" id="date_cons" class="form-control"
-                value="{{ isset($consultation) ? $consultation->date_cons : '' }}" required>
+                value="{{ isset($consultation) ? $consultation->date_cons : '' }}" required readonly>
             @error('date_cons')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Symptomes -->
+        <div class="mb-3">
+            <label for="symptome" class="form-label">Symptômes</label>
+            <textarea name="symptome" id="symptome" class="form-control" rows="4" required>{{ isset($consultation) ? $consultation->symptome : '' }}</textarea>
+            @error('symptome')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
 
         <!-- Note/Diagnostic -->
         <div class="mb-3">
-            <label for="note" class="form-label">Note/Diagnostic</label>
+            <label for="note" class="form-label">Diagnostic</label>
             <textarea name="note" id="note" class="form-control" rows="4" required>{{ isset($consultation) ? $consultation->note : '' }}</textarea>
             @error('note')
                 <div class="text-danger">{{ $message }}</div>
@@ -175,4 +184,15 @@
             console.log(`Handled delete for: ${type} - ${id}`);
         }
     }
+</script>
+
+<script>
+    // Récupérer la date actuelle au format YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
+
+    // Appliquer la date actuelle comme min et max
+    const dateInput = document.getElementById('date_cons');
+    dateInput.min = today;
+    dateInput.max = today;
+    dateInput.value = today; // Prédéfinit la valeur à aujourd'hui
 </script>

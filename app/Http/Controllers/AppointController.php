@@ -134,7 +134,7 @@ class AppointController extends Controller
         'surname' => 'required|string|max:255',
         'contact' => ['required', 'string', 'regex:/^(\+228)?\d{8}$/'],
         'date_app' => 'required|date|after_or_equal:today',
-        'time_app' => 'required',
+        'time_app' => 'required|date_format:H:i',
         'service_id' => 'required|integer|exists:services,id_serv',
       ]);
 

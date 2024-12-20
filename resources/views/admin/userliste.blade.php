@@ -63,8 +63,8 @@
                                     <select name="statut" id="statut" class="form-select" required>
                                         <option value="admin">Admin</option>
                                         <option value="secretaire">Secrétaire</option>
-                                        <option value="gestionnaire">Gestionnaire</option>
-                                        <option value="medecin">Médecin</option>
+                                        {{-- <option value="gestionnaire">Gestionnaire</option> --}}
+                                        <option value="docteur">Docteur</option>
                                     </select>
                                 </div>
                             </div>
@@ -76,15 +76,16 @@
                     </div>
                 </div>
                 <hr class="my-4">
-                @if (session('success_user '))
+
+                @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success_user') }}
+                        {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                @if (session('error_user'))
+                @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error_user') }}
+                        {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
@@ -174,12 +175,9 @@
                                                                 <option value="secretaire"
                                                                     {{ $user->statut == 'secretaire' ? 'selected' : '' }}>
                                                                     Secrétaire</option>
-                                                                <option value="gestionnaire"
-                                                                    {{ $user->statut == 'gestionnaire' ? 'selected' : '' }}>
-                                                                    Gestionnaire</option>
-                                                                <option value="medecin"
-                                                                    {{ $user->statut == 'medecin' ? 'selected' : '' }}>
-                                                                    Médecin
+                                                                <option value="docteur"
+                                                                    {{ $user->statut == 'docteur' ? 'selected' : '' }}>
+                                                                    Docteur
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -250,4 +248,20 @@
         </div>
     </div>
     <script src="{{ asset('js/search.js') }}"></script>
+    <script>
+        document.getElementById('global_search').addEventListener('input', function() {
+            filterTable('data_list', 'global_search');
+        });
+
+        function filterTable(containerId, searchInputId) {
+            let query = document.getElementById(searchInputId).value.toLowerCase();
+            let rows = document.querySelectorAll(`#${containerId} tr`);
+
+            rows.forEach(row => {
+                let rowText = Array.from(row.querySelectorAll('td')).map(cell => cell.textContent.toLowerCase())
+                    .join(' ');
+                row.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        }
+    </script>
 @endsection

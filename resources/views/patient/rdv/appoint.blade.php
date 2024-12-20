@@ -22,9 +22,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#annule" role="tab">Annulé</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link " data-bs-toggle="tab" href="#reprogramme" role="tab">Reprogrammé</a>
-            </li>
+            </li> --}}
         </ul>
 
         <div class="tab-content">
@@ -66,7 +66,7 @@
                                     <td>{{ $appoint->surname }}</td>
                                     <td>{{ $appoint->contact }} </td>
                                     <td>{{ $appoint->date_app->translatedFormat('d/m/Y') }}</td>
-                                    <td id="heure">{{ $appoint->time_app }}</td>
+                                    <td>{{ Carbon\Carbon::parse($appoint->time_app)->format('H:i') }}</td>
                                     <td>{{ $appoint->service->serv_name }}</td>
 
                                     <td>
@@ -151,7 +151,8 @@
                                     <td>{{ $complete->surname }}</td>
                                     <td>{{ $complete->contact }} </td>
                                     <td>{{ $complete->date_app->translatedFormat('d/m/Y') }}</td>
-                                    <td id="heure">{{ $complete->time_app }}</td>
+                                    {{-- <td id="heure">{{ $complete->time_app }}</td> --}}
+                                    <td>{{ Carbon\Carbon::parse($complete->time_app)->format('H:i') }}</td>
                                     <td>{{ $complete->service->serv_name }}</td>
                                 </tr>
                             @endforeach
@@ -181,7 +182,8 @@
                                     <td>{{ $appointment->surname }}</td>
                                     <td>{{ $appointment->contact }} </td>
                                     <td>{{ $appointment->date_app->translatedFormat('d/m/Y') }}</td>
-                                    <td id="heure">{{ $appointment->time_app }}</td>
+                                    {{-- <td id="heure">{{ $appointment->time_app }}</td> --}}
+                                    <td>{{ Carbon\Carbon::parse($appointment->time_app)->format('H:i') }}</td>
                                     <td>{{ $appointment->service->serv_name }}</td>
 
                                 </tr>
@@ -189,9 +191,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="tab-pane" id="reprogramme" role="tabpanel">
-                <!-- Table des rendez-vous Reprogrammé -->
             </div>
         </div>
 
@@ -248,7 +247,7 @@
                 </table>
             </div>
         </div> --}}
-        <script>
+        {{-- <script>
             let heureElement = document.getElementById('heure');
             let fullTime = heureElement.textContent; // Format: 10:15:30
             let formattedTime = fullTime.substring(0, 5); // Garde uniquement h:m
@@ -262,6 +261,22 @@
                 document.querySelector(`#${activeTab}`).classList.add('active');
                 document.querySelector(`#${activeTab}-content`).classList.add('show', 'active');
             });
+        </script> --}}
+
+        <script>
+            document.getElementById('global_search').addEventListener('input', function() {
+                filterTable('data_list', 'global_search');
+            });
+
+            function filterTable(containerId, searchInputId) {
+                let query = document.getElementById(searchInputId).value.toLowerCase();
+                let rows = document.querySelectorAll(`#${containerId} tr`);
+
+                rows.forEach(row => {
+                    let rowText = Array.from(row.querySelectorAll('td')).map(cell => cell.textContent.toLowerCase())
+                        .join(' ');
+                    row.style.display = rowText.includes(query) ? '' : 'none';
+                });
+            }
         </script>
-        <script src="{{ asset('js/search.js') }}"></script>
     @endsection

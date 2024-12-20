@@ -9,7 +9,7 @@
 
 
 
-<h3>Historique des consultations pour : {{ $patient->name }} {{ $patient->surname }}</h3>
+{{-- <h5>Historique des consultations pour : {{ $patient->name }} {{ $patient->surname }}</h5> --}}
 
 @if (session('success_history'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,10 +20,14 @@
 
 <div class="row">
     @forelse($consultations as $consultation)
-        <div class="col-md-5">
-            <div class="card mb-5">
-                <div class="card-body">
-                    <h5 class="card-title">Consultation du {{ $consultation->date_cons }}</h5>
+        <div class="col-md-5" id="search">
+            <div class="card mb-5 card-container">
+                <div class="card-body ">
+                    {{-- <h5 class="card-title">Consultation du {{ $consultation->date_cons }}</h5> --}}
+                    <h5 class="card-title">Consultation du
+                        {{ \Carbon\Carbon::parse($consultation->date_cons)->format('d/m/Y') }}</h5>
+
+                    <p class="card-text"><strong>Symptomes:</strong> {!! nl2br(e($consultation->symptome)) !!}</p>
                     <p class="card-text"><strong>Diagnostic :</strong> {!! nl2br(e($consultation->note)) !!}</p>
                     <hr>
                     <h6>Analyses :</h6>
@@ -83,3 +87,18 @@
         <p>Aucune consultation disponible.</p>
     @endforelse
 </div>
+<script>
+    document.getElementById('global_search').addEventListener('input', function() {
+        filterCards('search', 'global_search'); // 'search' correspond à l'ID contenant toutes les cartes
+    });
+
+    function filterCards(containerId, searchInputId) {
+        let query = document.getElementById(searchInputId).value.toLowerCase();
+        let cards = document.querySelectorAll(`#${containerId} .card-container`);
+
+        cards.forEach(card => {
+            let cardText = card.textContent.toLowerCase();
+            card.style.display = cardText.includes(query) ? '' : 'none';
+        });
+    }
+</script>

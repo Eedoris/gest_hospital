@@ -33,7 +33,7 @@ class UserController extends Controller
     if ($existingUser) {
       return redirect()
         ->route('user.index', ['fragment' => 'user'])
-        ->with('error_user', 'Ce email est déjà enregistré');
+        ->with('error', 'Ce email est déjà enregistré');
     }
 
 
@@ -46,7 +46,7 @@ class UserController extends Controller
       'uuid' => (string) Str::uuid(),
     ]);
 
-    return redirect()->route('user.index')->with('success_user', 'Utilisateur ajouté avec succès.');
+    return redirect()->route('user.index')->with('success', 'Utilisateur ajouté avec succès.');
   }
 
   public function update(Request $request, $uuid)
@@ -83,12 +83,23 @@ class UserController extends Controller
 
 
 
+  // public function destroy($uuid)
+  // {
+  //   $user = Users::where('uuid', $uuid)->firstOrFail();
+  //   $user->delete();
+
+  //   return redirect()->route('user.index')->with('success', 'Utilisateur supprimé avec succès.');
+  // }
+
   public function destroy($uuid)
   {
     $user = Users::where('uuid', $uuid)->firstOrFail();
-    $user->delete();
-
-    return redirect()->route('user.index')->with('success', 'Utilisateur supprimé avec succès.');
+    try {
+      $user->delete();
+      return redirect()->route('user.index')->with('success', 'Utilisateur supprimé avec succès.');
+    } catch (\Exception $e) {
+      return redirect()->route('user.index')->with('error', 'Erreur lors de la suppression.');
+    }
   }
 
 }

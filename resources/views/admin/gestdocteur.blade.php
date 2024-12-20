@@ -5,11 +5,11 @@
 @section('content')
     <div class="container">
 
-        <h3>Gestion des Médecins</h3>
+        <h3>Gestion des Docteurs</h3>
 
         <!-- Formulaire d'ajout -->
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
-            Ajouter un Médecin
+            Ajouter un docteur
         </button>
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -34,6 +34,7 @@
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Titre</th>
                     <th>Spécialité</th>
                     <th>Service</th>
                     <th>Actions</th>
@@ -44,6 +45,7 @@
                 @foreach ($doctors as $doctor)
                     <tr>
                         <td>{{ $doctor->user->name }} {{ $doctor->user->surname }}</td>
+                        <td>{{ $doctor->doctor_title }}</td>
                         <td>{{ $doctor->speciality->title ?? 'Non spécifiée' }}</td>
                         <td>{{ $doctor->service->serv_name }}</td>
                         <td>
@@ -75,14 +77,14 @@
                                 <form action="{{ route('doctor.update', $doctor->id_doctor) }}" method="POST">
                                     @csrf
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Modifier Médecin</h5>
+                                        <h5 class="modal-title">Modifier </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
                                     <div class="modal-body">
 
                                         <div class="mb-3">
-                                            <label for="user_id">Médecin</label>
+                                            <label for="user_id">Docteur</label>
                                             <select name="user_id" class="form-control" required>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id_user }}"
@@ -176,7 +178,7 @@
                                 <label for="user_id">Médecin</label>
                                 <select name="user_id" class="form-control" required>
                                     @foreach ($users as $user)
-                                        @if ($user->statut == 'medecin')
+                                        @if ($user->statut == 'docteur')
                                             <option value="{{ $user->id_user }}">{{ $user->name }}
                                                 {{ $user->surname }}
                                             </option>
@@ -219,4 +221,20 @@
 
     </div>
     <script src="{{ asset('js/search.js') }}"></script>
+    <script>
+        document.getElementById('global_search').addEventListener('input', function() {
+            filterTable('data_list', 'global_search');
+        });
+
+        function filterTable(containerId, searchInputId) {
+            let query = document.getElementById(searchInputId).value.toLowerCase();
+            let rows = document.querySelectorAll(`#${containerId} tr`);
+
+            rows.forEach(row => {
+                let rowText = Array.from(row.querySelectorAll('td')).map(cell => cell.textContent.toLowerCase())
+                    .join(' ');
+                row.style.display = rowText.includes(query) ? '' : 'none';
+            });
+        }
+    </script>
 @endsection

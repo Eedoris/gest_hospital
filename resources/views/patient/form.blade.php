@@ -35,8 +35,7 @@
                         <div class="mb-6">
                             <label class="form-label" for="contact">Contact</label>
                             <input type="text" class="form-control @error('contact') is-invalid @enderror" id="contact"
-                                name="contact" value="{{ old('contact') }}" placeholder="Ex : 91234567 ou +22891234567"
-                                required />
+                                name="contact" value="{{ old('contact') }}" placeholder="Ex : 91234567" required />
                             @error('contact')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

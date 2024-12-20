@@ -36,8 +36,8 @@
                         <div class="mb-6">
                             <label class="form-label" for="contact">Contact</label>
                             <input type="text" class="form-control @error('contact') is-invalid @enderror" id="contact"
-                                name="contact" value="{{ old('contact', $patient->contact) }}"
-                                placeholder="Ex : 91234567 ou +22891234567" required />
+                                name="contact" value="{{ old('contact', $patient->contact) }}" placeholder="Ex : 91234567"
+                                required />
                             @error('contact')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -68,10 +68,12 @@
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex"
                                 required>
                                 <option value="" disabled>Choisissez le sexe</option>
-                                <option value="Masculin" {{ old('sex', $patient->sex) == 'Masculin' ? 'selected' : '' }}>
+                                <option value="{{ old('sex', $patient->sex) }}"
+                                    {{ old('sex', $patient->sex) == 'Masculin' ? 'selected' : '' }}>
                                     Masculin
                                 </option>
-                                <option value="Féminin" {{ old('sex', $patient->sex) == 'Feminin' ? 'selected' : '' }}>
+                                <option value="{{ old('sex', $patient->sex) }}"
+                                    {{ old('sex', $patient->sex) == 'Feminin' ? 'selected' : '' }}>
                                     Féminin</option>
                             </select>
                             @error('sex')

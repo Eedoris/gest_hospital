@@ -6,22 +6,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
+
 class Users extends Authenticatable
 {
   use HasFactory;
 
-  // Spécifier que la clé primaire est 'id_user'
+
   protected $primaryKey = 'id_user';
 
-  // Indiquer que la clé n'est pas auto-incrémentée si elle utilise un UUID
-  public $incrementing = true; // Si c'est un UUID, mets `false`
+  public $incrementing = true;
 
-  // Type de clé primaire
-  protected $keyType = 'int'; // Ou 'string' si c'est un UUID
+  protected $keyType = 'int';
 
-  // Champs massivement assignables
   protected $fillable = ['name', 'surname', 'email', 'password', 'statut', 'uuid'];
 
-  // Génération automatique d'UUID pour chaque création d'utilisateur
+  // Rôles disponibles
+  const ROLE_ADMIN = 'admin';
+  const ROLE_DOCTOR = 'docteur';
+  const ROLE_SECRETAIRE = 'secretaire';
+  const ROLE_GESTIONNAIRE = 'gestionnaire';
+
+  // Vérification de rôle
+  public function hasRole($role)
+  {
+    return $this->statut === $role;
+  }
+
+  // Dans le modèle Users.php
+  public function hasAnyRole(array $roles)
+  {
+    return in_array($this->statut, $roles);
+  }
+
 
 }

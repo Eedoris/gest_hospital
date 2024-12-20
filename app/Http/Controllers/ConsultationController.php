@@ -51,6 +51,7 @@ class ConsultationController extends Controller
         }
       ],
       'note' => 'required|string',
+      'symptome' => 'required|string',
       'analyses' => 'nullable|array',
       'analyses.*.libelle' => 'required_with:analyses|string',
       'analyses.*.result' => 'nullable|string',
@@ -62,6 +63,7 @@ class ConsultationController extends Controller
     $consultation = $patient->consultations()->create([
       'date_cons' => $validated['date_cons'],
       'note' => $validated['note'],
+      'symptome' => $validated['symptome']
     ]);
 
 
@@ -152,6 +154,7 @@ class ConsultationController extends Controller
     $request->validate([
       'date_cons' => 'required|date|date_equals:today',
       'note' => 'required|string|max:255',
+      'symptome' => 'required|string',
       'analyses.*.libelle' => 'nullable|string',
       'analyses.*.result' => 'nullable|string',
       'prescriptions.*.product' => 'nullable|string',
@@ -163,6 +166,7 @@ class ConsultationController extends Controller
     // Mise à jour de la consultation
     $consultation->date_cons = $request->date_cons;
     $consultation->note = $request->note;
+    $consultation->symptome = $request->symptome;
     $consultation->save();
 
     // Gestion des suppressions d'analyses

@@ -3,6 +3,7 @@
 @section('Statistiques')
 
 @section('content')
+
     <div class="container">
         <h1 class="my-4 text-center">Statistiques</h1>
         <!--  <a href="{{ route('statistics.export') }}" class="btn btn-primary ">Exporter les statistiques</a>-->
@@ -12,7 +13,10 @@
         <div>
             <div class="d-flex justify-content-start">
 
-                <button type="submit" class="btn btn-primary">Exporter</button>
+                <a href="{{ route('statistics.export') }}" class="btn btn-primary ">Exporter les statistiques</a>
+
+                {{-- <button type="submit" class="btn btn-primary">Exporter</button> --}}
+
                 {{-- <form method="GET" action="{{ route('statistics.export') }}">
                     <div class="row">
                         <div class="col-md-5">

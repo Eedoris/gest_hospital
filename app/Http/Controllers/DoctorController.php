@@ -16,7 +16,7 @@ class DoctorController extends Controller
   {
     // Récupère les médecins avec leurs utilisateurs, spécialités et services associés
     $doctors = Doctor::with('user', 'speciality', 'service')->get();
-    $users = Users::where('statut', 'medecin')->get();
+    $users = Users::where('statut', 'docteur')->get();
     $specialities = Speciality::all();
     $services = Service::all();
 
@@ -39,7 +39,7 @@ class DoctorController extends Controller
       'id_serv' => $validated['id_serv'],
     ]);
 
-    return redirect()->route('doctor.index')->with('success', 'Médecin ajouté avec succès.');
+    return redirect()->route('doctor.index')->with('success', 'Docteur ajouté avec succès.');
   }
 
   public function update(Request $request, $id_doctor)
