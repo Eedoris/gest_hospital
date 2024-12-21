@@ -164,6 +164,7 @@ Route::middleware('auth')->group(function () {
   Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('consultations.edit');
   Route::post('consultations/{id}', [ConsultationController::class, 'update'])->name('consultations.update');
   Route::get('/patients/{uuid}', [PatientController::class, 'show'])->name('patients.show');
+  Route::get('/patients/{uuid}/history', [PatientController::class, 'history'])->name('cons.history');
 
   //doctor-analyse
   Route::post('/patients/analyses', [AnalyseController::class, 'store'])->name('analysestore');

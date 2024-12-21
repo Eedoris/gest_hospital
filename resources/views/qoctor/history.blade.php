@@ -18,6 +18,8 @@
     </div>
 @endif
 
+
+
 <div class="row">
     @forelse($consultations as $consultation)
         <div class="col-md-5" id="search">

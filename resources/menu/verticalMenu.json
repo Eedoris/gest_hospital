@@ -4,14 +4,18 @@
       "url": "/patients",
       "name": "Patients",
       "icon": "menu-icon tf-icons bx bx-home-smile",
-      "roles": ["secretaire"],
+      "roles": [
+        "secretaire"
+      ],
       "slug": "dashboard",
       "submenu": [
         {
           "url": "/patients",
           "name": "Liste",
           "slug": "dashboard-analytics",
-          "roles": ["secretaire"]
+          "roles": [
+            "secretaire"
+          ]
         }
       ]
     },
@@ -19,12 +23,17 @@
       "name": "Rendez-vous",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "Layouts",
+      "roles": [
+        "secretaire"
+      ],
       "submenu": [
         {
           "url": "/appointments",
           "name": "Liste",
           "slug": "appoint_liste",
-          "roles": ["doctor"]
+          "roles": [
+            "secretaire"
+          ]
         }
       ]
     },
@@ -32,14 +41,17 @@
       "name": "Patients",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "Patientsdoc",
-      "roles": ["doctor"],
+      "roles": [
+        "docteur"
+      ],
       "submenu": [
         {
           "url": "/doctorpat",
           "name": "Liste",
           "slug": "layouts-without-menu",
-          "roles": ["doctor"]
-
+          "roles": [
+            "docteur"
+          ]
         }
       ]
     },
@@ -47,32 +59,42 @@
       "url": "/stats",
       "name": "Options",
       "icon": "menu-icon tf-icons bx bx-layout",
-      "roles": ["admin"],
+      "roles": [
+        "admin"
+      ],
       "slug": "Admin",
       "submenu": [
         {
           "url": "/stats",
           "name": "Statistique",
           "slug": "",
-          "roles": ["admin"]
+          "roles": [
+            "admin"
+          ]
         },
         {
           "url": "/admin/user",
           "name": "Gestion des utilisateurs",
           "slug": "layouts-without-menu",
-          "roles": ["admin"]
+          "roles": [
+            "admin"
+          ]
         },
         {
           "url": "/admin/doctor",
           "name": "Gestion des médécins",
           "slug": "layouts-without-menu",
-          "roles": ["admin"]
+          "roles": [
+            "admin"
+          ]
         },
         {
           "url": "/adminservice",
           "name": "Services et spécialités",
           "slug": "layouts-without-menu",
-          "roles": ["admin"]
+          "roles": [
+            "admin"
+          ]
         }
       ]
     }

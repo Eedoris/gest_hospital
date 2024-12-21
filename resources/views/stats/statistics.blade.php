@@ -127,13 +127,13 @@
                         <canvas id="medicationsChart"></canvas>
                     </div>
                 </div>
-                <div class="text-center mt-3">
+                {{-- <div class="text-center mt-3">
                     <p><strong>Total de prescriptions :</strong> {{ $medications->sum('count') }}</p>
                     <p><strong>Médicament le plus prescrit :</strong>
                         {{ $medications->sortByDesc('count')->first()['product'] }}
                         ({{ $medications->sortByDesc('count')->first()['count'] }} prescriptions)
                     </p>
-                </div>
+                </div> --}}
 
             </div>
 

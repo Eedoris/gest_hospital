@@ -30,3 +30,4 @@ class RoleMiddleware
     return redirect('/login')->with('error', 'Accès non autorisé.');
   }
 }
+

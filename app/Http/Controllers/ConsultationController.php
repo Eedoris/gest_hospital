@@ -9,7 +9,7 @@ use App\Models\Doctor;
 use App\Models\Prescription;
 use App\Models\Users;
 use Illuminate\Http\Request;
-use App\Models\AnalyseDisponible;
+use Illuminate\Support\Facades\Auth;
 
 class ConsultationController extends Controller
 {
@@ -17,15 +17,19 @@ class ConsultationController extends Controller
   public function index($uuid)
   {
     $patient = Patient::where('uuid', $uuid)->firstOrFail();
+    $doctor = Auth::user()->doctor;
+
+    // Vérifier si le médecin est bien associé à ce patient, puis récupérer les consultations
     $consultations = Consultation::with(['analyses', 'prescriptions'])
       ->where('patient_id', $patient->id_pat)
+      ->where('doctor_id', $doctor->id_doctor) // Filtrer par le doctor_id
       ->orderBy('date_cons', 'desc')
       ->get();
 
-
-
     return view('qoctor.consultation', compact('patient', 'consultations'));
   }
+
+
   public function create($id)
   {
     $patient = Patient::findOrFail($id);
@@ -38,6 +42,8 @@ class ConsultationController extends Controller
 
   public function store(Request $request, Patient $patient)
   {
+    $user = Auth::user();
+    $doctor = $user->doctor;
 
     $validated = $request->validate([
       'date_cons' => [
@@ -63,7 +69,9 @@ class ConsultationController extends Controller
     $consultation = $patient->consultations()->create([
       'date_cons' => $validated['date_cons'],
       'note' => $validated['note'],
-      'symptome' => $validated['symptome']
+      'symptome' => $validated['symptome'],
+      'doctor_id' => $doctor->id_doctor,
+
     ]);
 
 
@@ -245,14 +253,13 @@ class ConsultationController extends Controller
 
     return redirect()->back()->with('success_history', 'Consultation supprimée avec succès !');
   }
-  public function history()
-  {
+  // public function history()
+  // {
 
-    $consultations = Consultation::with(['doctor', 'patient'])->get();
+  //   $consultations = Consultation::with(['doctor', 'patient'])->get();
 
-    return view('admin.history', compact('consultations'));
-  }
-
+  //   return view('admin.history', compact('consultations'));
+  // }
 
 
 }

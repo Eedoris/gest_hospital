@@ -32,11 +32,18 @@ class Users extends Authenticatable
     return $this->statut === $role;
   }
 
-  // Dans le modèle Users.php
-  public function hasAnyRole(array $roles)
+  public function doctor()
   {
-    return in_array($this->statut, $roles);
+    return $this->hasOne(Doctor::class, 'user_id', 'id_user');
   }
+
+
+  // Dans le modèle User
+
+  // // public function hasAnyRole(array $roles)
+  // {
+  //   return in_array($this->statut, $roles);
+  // }
 
 
 }
