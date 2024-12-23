@@ -133,7 +133,15 @@ class PatientController extends Controller
 
     try {
       $patient = Patient::where('uuid', $uuid)->firstOrFail();
-      $patient->update($validate);
+      // Mise à jour des données
+      $patient->update([
+        'name' => $request->name,
+        'surname' => $request->surname,
+        'date_of_birth' => $request->date_of_birth,
+        'sex' => $request->sex,
+        'contact' => $request->contact,
+        'adress' => $request->adress,
+      ]);
 
       return redirect()->route('patientindex')->with('success', 'Modification effectué ');
     } catch (Exception $e) {

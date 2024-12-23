@@ -79,18 +79,24 @@
                                                     href="{{ route('appoint.cancel', ['id' => encrypt($appoint->id_appoint)]) }}">
                                                     <i class="fa fa-times-circle"></i> Annuler
                                                 </a>
-                                                <a class="dropdown-item"
+                                                {{-- <a class="dropdown-item"
                                                     href="{{ route('appoint.complete', ['id' => encrypt($appoint->id_appoint)]) }}">
                                                     <i class="fa fa-check-circle"></i> Effectuer
+                                                </a> --}}
+                                                <a class="dropdown-item {{ $appoint->date_app->isFuture() ? 'disabled' : '' }}"
+                                                    href="{{ $appoint->date_app->isFuture() ? '#' : route('appoint.complete', ['id' => encrypt($appoint->id_appoint)]) }}"
+                                                    title="{{ $appoint->date_app->isFuture() ? 'Vous ne pouvez pas effectuer ce rendez-vous avant sa date prévue.' : '' }}">
+                                                    <i class="fa fa-check-circle"></i> Effectuer
                                                 </a>
+
                                                 <a class="dropdown-item"
                                                     href="{{ route('appoint.showRescheduleForm', $appoint->id_appoint) }}"
-                                                    class="btn btn-warning"> <i class="fa fa-calendar">Reprogrammer</a>
+                                                    class="btn btn-warning"> <i class="fa fa-calendar"></i> Reprogrammer</a>
 
 
                                                 <a class="dropdown-item"
                                                     href="{{ route('appoint.edit', ['token' => encrypt($appoint->id_appoint)]) }}">
-                                                    <i class="fa fa-edit"></i> Repro
+                                                    <i class="fa fa-edit"></i> Modifier
                                                 </a>
                                             </div>
                                         </div>

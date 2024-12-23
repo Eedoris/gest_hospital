@@ -39,6 +39,7 @@
     },
     {
       "name": "Patients",
+      "url": "/doctorpat",
       "icon": "menu-icon tf-icons bx bx-layout",
       "slug": "Patientsdoc",
       "roles": [
@@ -57,7 +58,7 @@
     },
     {
       "url": "/stats",
-      "name": "Options",
+      "name": "Menu",
       "icon": "menu-icon tf-icons bx bx-layout",
       "roles": [
         "admin"

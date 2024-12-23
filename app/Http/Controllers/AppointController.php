@@ -133,8 +133,8 @@ class AppointController extends Controller
         'name' => 'required|string|max:255',
         'surname' => 'required|string|max:255',
         'contact' => ['required', 'string', 'regex:/^(\+228)?\d{8}$/'],
-        'date_app' => 'required|date|after_or_equal:today',
-        'time_app' => 'required|date_format:H:i',
+        // 'date_app' => 'required|date|after_or_equal:today',
+        // 'time_app' => 'required|date_format:H:i',
         'service_id' => 'required|integer|exists:services,id_serv',
       ]);
 
@@ -145,8 +145,8 @@ class AppointController extends Controller
         'name' => $request->name,
         'surname' => $request->surname,
         'contact' => $request->contact,
-        'date_app' => $request->date_app,
-        'time_app' => $request->time_app,
+        // 'date_app' => $request->date_app,
+        // 'time_app' => $request->time_app,
         'service_id' => $request->service_id,
       ]);
 
@@ -173,18 +173,38 @@ class AppointController extends Controller
   }
 
 
+  // public function complete($id)
+  // {
+  //   try {
+  //     $decryptedId = Crypt::decrypt($id);
+  //     $appoint = Appoint::findOrFail($decryptedId);
+  //     $appoint->status = 'Effectué';
+  //     $appoint->save();
+
+  //     return redirect()->route('appointindex')->with('success', 'Rendez-vous marqué comme effectué.');
+  //   } catch (Exception $e) {
+  //     Log::error('Erreur lors de la complétion : ' . $e->getMessage());
+  //     return redirect()->route('appointindex')->with('error', 'Erreur lors de la complétion.');
+  //   }
+  // }
   public function complete($id)
   {
     try {
-      $decryptedId = Crypt::decrypt($id);
-      $appoint = Appoint::findOrFail($decryptedId);
+      $appoint = Appoint::findOrFail(decrypt($id));
+
+      // Vérifier si la date du rendez-vous est passée
+      if ($appoint->date_app->isFuture()) {
+        return redirect()->back()->with('error', 'Vous ne pouvez pas marquer ce rendez-vous comme effectué avant la date prévue.');
+      }
+
+      // Marquer le rendez-vous comme "Effectué"
       $appoint->status = 'Effectué';
       $appoint->save();
 
-      return redirect()->route('appointindex')->with('success', 'Rendez-vous marqué comme effectué.');
+      return redirect()->back()->with('success', 'Rendez-vous marqué comme effectué.');
     } catch (Exception $e) {
-      Log::error('Erreur lors de la complétion : ' . $e->getMessage());
-      return redirect()->route('appointindex')->with('error', 'Erreur lors de la complétion.');
+      Log::error($e);
+      return redirect()->back()->with('error', 'Une erreur est survenue.');
     }
   }
 

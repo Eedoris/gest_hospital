@@ -48,19 +48,18 @@
                                 value="{{ $appoint->surname }}" placeholder="Prénoms..." />
                         </div>
 
-                        <!-- Date du rendez-vous -->
+                        {{-- <!-- Date du rendez-vous -->
                         <div class="mb-3">
                             <label class="form-label" for="date_rdv">Date</label>
-                            <input type="date" class="form-control" id="date_rdv" name="date_app" max="{{ date('Y-m-d') }}" 
-                                value="{{ $appoint->date_app }}" required />
+                            <input type="date" class="form-control" id="date_rdv" name="date_app"
+                                max="{{ date('Y-m-d') }}" value="{{ $appoint->date_app }}" required readonly/>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="time_rdv">Heure</label>
                             <input type="time" class="form-control" id="time_rdv" name="time_app"
-                                value="{{ $appoint->time_app }}" required />
-                        </div>
-
+                                value="{{ $appoint->time_app }}" required disabled />
+                        </div> --}}
 
                         <div class="mb-3">
                             <label class="form-label" for="id_serv">Sélectionner un service</label>
@@ -75,6 +74,8 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Annuler</button>
+
                     </form>
                 </div>
             </div>

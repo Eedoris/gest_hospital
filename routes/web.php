@@ -62,7 +62,12 @@ use App\Http\Controllers\PatientController;
 
 // Main Page Route
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Route::get('/', function () {
+//   return view('login.login');
+// });
+
 
 // layout
 Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
@@ -79,9 +84,9 @@ Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-e
 Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name('pages-misc-under-maintenance');
 
 // authentication
-Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+// Route::get('/auth/login-basic', [LoginBasic::class, 'index'])->name('auth-login-basic');
+// Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
+// Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
 
 // cards
 Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
@@ -128,96 +133,95 @@ Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic')
 
 //routes secretaire
 
-Route::middleware('auth')->group(function () {
-  Route::get('/patients', [PatientController::class, 'index'])->name('patientindex');
-  Route::get('/newpatient', [PatientController::class, 'create'])->name('createpatient');
-  Route::post('/patients', [PatientController::class, 'store'])->name('patientstore');
-  Route::get('/patients/{uuid}/editpat', [PatientController::class, 'edit'])->name('patientsedit');
-  Route::post('/patients/{uuid}/updatpat', [PatientController::class, 'update'])->name('patientsupdate');
 
-  //routes rdv-secretaire
-  Route::get('/appointments', [AppointController::class, 'index'])->name('appointindex');
-  Route::get('/newappoint', [AppointController::class, 'create'])->name('createappoint');
-  Route::post('/appointments', [AppointController::class, 'store'])->name('appointstore');
-  Route::get('/appoints/edit', [AppointController::class, 'edit'])->name('appoint.edit');
-  Route::post('/appoints/update', [AppointController::class, 'update'])->name('appoint.update');
+Route::get('/patients', [PatientController::class, 'index'])->name('patientindex');
+Route::get('/newpatient', [PatientController::class, 'create'])->name('createpatient');
+Route::post('/patients', [PatientController::class, 'store'])->name('patientstore');
+Route::get('/patients/{uuid}/editpat', [PatientController::class, 'edit'])->name('patientsedit');
+Route::post('/patients/{uuid}/updatpat', [PatientController::class, 'update'])->name('patientsupdate');
 
-  Route::get('/appoints/cancel/{id}', [AppointController::class, 'cancel'])->name('appoint.cancel');
-  Route::get('/appoints/complete/{id}', [AppointController::class, 'complete'])->name('appoint.complete');
-  Route::get('/appoint/{id}/resform', [AppointController::class, 'showRescheduleForm'])->name('appoint.showRescheduleForm');
+//routes rdv-secretaire
+Route::get('/appointments', [AppointController::class, 'index'])->name('appointindex');
+Route::get('/newappoint', [AppointController::class, 'create'])->name('createappoint');
+Route::post('/appointments', [AppointController::class, 'store'])->name('appointstore');
+Route::get('/appoints/edit', [AppointController::class, 'edit'])->name('appoint.edit');
+Route::post('/appoints/update', [AppointController::class, 'update'])->name('appoint.update');
 
-  Route::post('/appoint/reschedule', [AppointController::class, 'reschedule'])->name('appoint.reschedule');
-  Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search');
+Route::get('/appoints/cancel/{id}', [AppointController::class, 'cancel'])->name('appoint.cancel');
+Route::get('/appoints/complete/{id}', [AppointController::class, 'complete'])->name('appoint.complete');
+Route::get('/appoint/{id}/resform', [AppointController::class, 'showRescheduleForm'])->name('appoint.showRescheduleForm');
 
-
-  //Doctor routes
-  Route::get('/doctorpat', [PatientController::class, 'indexdoctor'])->name('docpat');
-
-  Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('consultations.index');
-
-  Route::post('/consultations/store/{patient}', [ConsultationController::class, 'store'])->name('consultations.store');
-  //Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
-  Route::post('/consultations/destroy/{id_cons}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
-  Route::get('/consultations/{id}/print', [ConsultationController::class, 'print'])->name('consultations.print');
-
-  Route::get('consultations/{id}/create', [ConsultationController::class, 'edit'])->name('consultations.create');
-  Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('consultations.edit');
-  Route::post('consultations/{id}', [ConsultationController::class, 'update'])->name('consultations.update');
-  Route::get('/patients/{uuid}', [PatientController::class, 'show'])->name('patients.show');
-  Route::get('/patients/{uuid}/history', [PatientController::class, 'history'])->name('cons.history');
-
-  //doctor-analyse
-  Route::post('/patients/analyses', [AnalyseController::class, 'store'])->name('analysestore');
-  Route::post('/patients/analyseupdate/{id_an}', [AnalyseController::class, 'update'])->name('analyseupdate');
-  Route::post('/patients/analysedestroy/{id_an}', [AnalyseController::class, 'destroy'])->name('analysedestroy');
+Route::post('/appoint/reschedule', [AppointController::class, 'reschedule'])->name('appoint.reschedule');
+Route::get('/patients/search', [AppointController::class, 'searchPatient'])->name('patients.search');
 
 
+//Doctor routes
+Route::get('/doctorpat', [PatientController::class, 'indexdoctor'])->name('docpat');
 
-  //admin routes
+Route::get('/patients/{uuid}/consultations', [ConsultationController::class, 'index'])->name('consultations.index');
 
-  Route::get('/adminservice', [ServiceController::class, 'index'])->name('service.index');
-  Route::post('/services/store', [ServiceController::class, 'store'])->name('servicestore');
-  Route::post('/services/{id_serv}', [ServiceController::class, 'update'])->name('servicesupdate');
-  Route::post('/services/destroy/{id_serv}', [ServiceController::class, 'destroy'])->name('services.destroy');
+Route::post('/consultations/store/{patient}', [ConsultationController::class, 'store'])->name('consultations.store');
+//Route::post('/consultations/{id_cons}', [ConsultationController::class, 'update'])->name('consultations.update');
+Route::post('/consultations/destroy/{id_cons}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
+Route::get('/consultations/{id}/print', [ConsultationController::class, 'print'])->name('consultations.print');
 
-  //adminanalyse
-  Route::post('/analyse/store', [AnalysedispoController::class, 'store'])->name('analyses.store');
-  Route::post('/analyse/destroy/{id}', [AnalysedispoController::class, 'destroy'])->name('analyses.destroy');
+Route::get('consultations/{id}/create', [ConsultationController::class, 'edit'])->name('consultations.create');
+Route::get('consultations/{id}/edit', [ConsultationController::class, 'edit'])->name('consultations.edit');
+Route::post('consultations/{id}', [ConsultationController::class, 'update'])->name('consultations.update');
+Route::get('/patients/{uuid}', [PatientController::class, 'show'])->name('patients.show');
+Route::get('/patients/{uuid}/history', [PatientController::class, 'history'])->name('cons.history');
 
-  //admin-consultation
-  Route::get('/admin/history', [ConsultationController::class, 'history'])->name('consultationadmin.history');
+//doctor-analyse
+Route::post('/patients/analyses', [AnalyseController::class, 'store'])->name('analysestore');
+Route::post('/patients/analyseupdate/{id_an}', [AnalyseController::class, 'update'])->name('analyseupdate');
+Route::post('/patients/analysedestroy/{id_an}', [AnalyseController::class, 'destroy'])->name('analysedestroy');
 
 
 
-  //admin-spe
-  Route::post('/admin/spe/store', [SpeController::class, 'store'])->name('specialite.store');
-  Route::post('/admin/speupdate/{id_spe}', [SpeController::class, 'update'])->name('specialite.update');
-  Route::post('/admin/spedestroy/{id_spe}', [SpeController::class, 'destroy'])->name('specialite.destroy');
+//admin routes
+
+Route::get('/adminservice', [ServiceController::class, 'index'])->name('service.index');
+Route::post('/services/store', [ServiceController::class, 'store'])->name('servicestore');
+Route::post('/services/{id_serv}', [ServiceController::class, 'update'])->name('servicesupdate');
+Route::post('/services/destroy/{id_serv}', [ServiceController::class, 'destroy'])->name('services.destroy');
+
+//adminanalyse
+Route::post('/analyse/store', [AnalysedispoController::class, 'store'])->name('analyses.store');
+Route::post('/analyse/destroy/{id}', [AnalysedispoController::class, 'destroy'])->name('analyses.destroy');
+
+//admin-consultation
+Route::get('/admin/history', [ConsultationController::class, 'history'])->name('consultationadmin.history');
 
 
-  //admin-user
-  Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
-  Route::post('/admin/userstore', [UserController::class, 'store'])->name('userstore');
-  Route::post('/admin/user/{uuid}', [UserController::class, 'update'])->name('user.update');
-  Route::post('/admin/delete/{uuid}', [UserController::class, 'destroy'])->name('user.destroy');
+
+//admin-spe
+Route::post('/admin/spe/store', [SpeController::class, 'store'])->name('specialite.store');
+Route::post('/admin/speupdate/{id_spe}', [SpeController::class, 'update'])->name('specialite.update');
+Route::post('/admin/spedestroy/{id_spe}', [SpeController::class, 'destroy'])->name('specialite.destroy');
+
+
+//admin-user
+Route::get('/admin/user', [UserController::class, 'index'])->name('user.index');
+Route::post('/admin/userstore', [UserController::class, 'store'])->name('userstore');
+Route::post('/admin/user/{uuid}', [UserController::class, 'update'])->name('user.update');
+Route::post('/admin/delete/{uuid}', [UserController::class, 'destroy'])->name('user.destroy');
 
 
 
-  //admin-doctor
-  Route::get('/admin/doctor', [DoctorController::class, 'index'])->name('doctor.index');
-  Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctor.store');
-  Route::post('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
+//admin-doctor
+Route::get('/admin/doctor', [DoctorController::class, 'index'])->name('doctor.index');
+Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctor.store');
+Route::post('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
-  //admin_static
+//admin_static
 
-  Route::get('/stats', [StatisticsController::class, 'index'])->name('statistics.index');
-  Route::get('/stats/export', [StatisticsController::class, 'exportStatistics'])->name('statistics.export');
-
-});
+Route::get('/stats', [StatisticsController::class, 'index'])->name('statistics.index');
+Route::get('/stats/export', [StatisticsController::class, 'exportStatistics'])->name('statistics.export');
 
 
 
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('loginstore');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

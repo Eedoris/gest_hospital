@@ -10,6 +10,29 @@
             width: 200px;
             height: 180px;
         }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+        }
+
+        .logout-btn a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .logout-btn a:hover {
+            background-color: #f8f9fa;
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+        }
     </style>
 
     <div class="app-brand demo">
@@ -46,6 +69,15 @@
             @endif
         @endforeach
     </ul>
+    <div class="logout-btn">
+        <a href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="bx bx-log-out"></i> <span>Déconnexion</span>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
 
 
 </aside>

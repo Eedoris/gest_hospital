@@ -13,7 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
     health: '/up',
   )
   ->withMiddleware(function (Middleware $middleware) {
+
   })
   ->withExceptions(function (Exceptions $exceptions) {
     //
+    $exceptions->renderable(function (\Throwable $e) {
+      // Vérifie si l'exception est une TokenMismatchException
+      if ($e instanceof TokenMismatchException) {
+        return redirect()->route('login')->with('error', 'Votre session a expiré. Veuillez vous reconnecter.');
+      }
+    });
   })->create();

@@ -27,7 +27,6 @@ class RoleMiddleware
     }
 
     // Rediriger si l'accès est interdit
-    return redirect('/login')->with('error', 'Accès non autorisé.');
+    return redirect('/')->with('error', 'Accès non autorisé.');
   }
 }
-

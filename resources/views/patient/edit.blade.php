@@ -68,13 +68,13 @@
                             <select class="form-control @error('sex') is-invalid @enderror" id="sex" name="sex"
                                 required>
                                 <option value="" disabled>Choisissez le sexe</option>
-                                <option value="{{ old('sex', $patient->sex) }}"
-                                    {{ old('sex', $patient->sex) == 'Masculin' ? 'selected' : '' }}>
+
+                                <option value="Masculin" {{ old('sex', $patient->sex) == 'Masculin' ? 'selected' : '' }}>
                                     Masculin
                                 </option>
-                                <option value="{{ old('sex', $patient->sex) }}"
-                                    {{ old('sex', $patient->sex) == 'Feminin' ? 'selected' : '' }}>
-                                    Féminin</option>
+                                <option value="Féminin" {{ old('sex', $patient->sex) == 'Feminin' ? 'selected' : '' }}>
+                                    Féminin
+                                </option>
                             </select>
                             @error('sex')
                                 <span class="text-danger">{{ $message }}</span>
